@@ -1,9 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Download, ArrowRight, Sparkles } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 export default function HeroSection() {
     return (
@@ -118,6 +117,22 @@ export default function HeroSection() {
                             I specialize in crafting complete web and mobile applications with elegant code. From responsive frontends to
                             powerful backends, I turn ideas into scalable digital solutions.
                         </motion.p>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.55 }}
+                            className="mb-8"
+                        >
+                            <div className="inline-flex flex-wrap items-center gap-2 rounded-xl border border-blue-500/30 bg-blue-950/20 px-3 py-2 backdrop-blur-sm">
+                                <span className="text-xs md:text-sm text-blue-200 font-semibold">Current Focus:</span>
+                                <span className="text-xs md:text-sm text-gray-200">Next.js at scale</span>
+                                <span className="text-blue-400/60">•</span>
+                                <span className="text-xs md:text-sm text-gray-200">UI/UX systems</span>
+                                <span className="text-blue-400/60">•</span>
+                                <span className="text-xs md:text-sm text-gray-200">n8n automation</span>
+                            </div>
+                        </motion.div>
 
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}

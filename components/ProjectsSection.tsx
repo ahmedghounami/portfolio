@@ -5,7 +5,6 @@ import { Code, ExternalLink } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { image, li } from "framer-motion/client"
 import Image from "next/image"
 
 export default function ProjectsSection() {
@@ -17,8 +16,8 @@ export default function ProjectsSection() {
             tech: ["Next.js", "TypeScript", "Fastify", "SQLite"],
             status: "In Development",
             year: "2025",
-            
             link: "https://github.com/ahmedghounami/aivita",
+            caseStudy: "https://github.com/ahmedghounami/aivita#readme",
             image: "/aivita.png",
         },
         {
@@ -28,8 +27,8 @@ export default function ProjectsSection() {
             tech: ["Next.js", "Fastify", "SQLite3", "Tailwind CSS"],
             status: "In Development",
             year: "2025",
-            
             link: "https://github.com/ahmedghounami/trans",
+            caseStudy: "https://github.com/ahmedghounami/trans#readme",
             image: "/trans.png",
 
         },
@@ -39,7 +38,6 @@ export default function ProjectsSection() {
             tech: ["C++98", "HTTP Protocol", "Systems Programming"],
             status: "Completed",
             year: "2025",
-            
             link: "https://github.com/ahmedghounami/httpserver",
             image: "https://miro.medium.com/v2/resize:fit:1200/1*age3Dgxl8sz6LZgDIwOSNQ.png",
         },
@@ -49,7 +47,6 @@ export default function ProjectsSection() {
             tech: ["Docker", "DevOps", "Infrastructure"],
             status: "Completed",
             year: "2024",
-            
             link: "https://github.com/ahmedghounami/42-inception",
             image: "https://www.appsdeveloperblog.com/wp-content/uploads/2023/05/docker-tutorial-for-beginners.gif",
         },
@@ -132,14 +129,26 @@ export default function ProjectsSection() {
                                                     </Badge>
                                                 ))}
                                             </div>
-                                            <motion.div
-                                                whileHover={{ x: 5 }}
-                                                className="flex items-center text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
-                                            >
-                                                <Link href={project.link} className="text-sm flex font-semibold">
-                                                    View Project <ExternalLink className="w-4 h-4 ml-2" />
-                                                </Link>
-                                            </motion.div>
+                                            <div className="flex flex-wrap items-center gap-4">
+                                                <motion.div
+                                                    whileHover={{ x: 5 }}
+                                                    className="flex items-center text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
+                                                >
+                                                    <Link href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm flex font-semibold">
+                                                        View Project <ExternalLink className="w-4 h-4 ml-2" />
+                                                    </Link>
+                                                </motion.div>
+                                                {project.caseStudy ? (
+                                                    <Link
+                                                        href={project.caseStudy}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-sm font-semibold text-blue-200 border border-blue-400/40 rounded-md px-3 py-1.5 hover:bg-blue-500/15 hover:text-white transition-colors"
+                                                    >
+                                                        Case Study
+                                                    </Link>
+                                                ) : null}
+                                            </div>
                                         </CardContent>
                                     </div>
                                 </Card>

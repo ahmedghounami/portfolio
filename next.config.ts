@@ -1,11 +1,34 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  images: {
-  domains: [ 'cdn.intra.42.fr', 'miro.medium.com', 'www.appsdeveloperblog.com', 'www.1337.ma', 'framerusercontent.com', 'about.udemy.com'],
-  },
-};
+import type { NextConfig } from "next"
 
-module.exports = nextConfig;
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.intra.42.fr",
+      },
+      {
+        protocol: "https",
+        hostname: "miro.medium.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.appsdeveloperblog.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.1337.ma",
+      },
+      {
+        protocol: "https",
+        hostname: "framerusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "about.udemy.com",
+      },
+    ],
+  },
+}
+
+export default nextConfig

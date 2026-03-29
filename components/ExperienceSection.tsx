@@ -3,14 +3,20 @@
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { title } from "process"
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
-import { image } from "framer-motion/client"
 import Image from "next/image"
 
 export default function ExperienceSection() {
-    const experiences = [
+    const experiences: {
+        title: string
+        period: string
+        description: string
+        skills: string[]
+        type: string
+        link: string
+        image?: string
+    }[] = [
         {
             title: "1337 School",
             period: "2023 - Present",
@@ -32,13 +38,23 @@ export default function ExperienceSection() {
         },
         {
             title: "a2xcorp",
-            period: "2025 - present",
+            period: "2025 • 2 months internship",
             description:
                 "Contributing to the development of web applications, collaborating with cross-functional teams, and implementing new features.",
             skills: ["React", "Next.js", "Node.js", "Express", "Database Management"],
             type: "Internship",
             link: "https://a2xcorp.com/",
             image: "https://framerusercontent.com/images/TuWoMYgA6buWx4FUpZiwrPMlp0.jpg",
+        },
+        {
+            title: "TALIO",
+            period: "2025 - Present",
+            description:
+                "Building and scaling full-stack web features, integrating automation workflows, and shipping production-ready solutions with a strong focus on UX and performance.",
+            skills: ["Next.js", "Node.js", "Supabase", "n8n Automation", "Full-Stack Web Development"],
+            type: "Internship",
+            link: "https://www.taliotalent.com/",
+            image: "/talio - logo.png",
         },
     ]
 
@@ -85,11 +101,16 @@ export default function ExperienceSection() {
                                 <Card className="bg-black/70 border-blue-500/20 backdrop-blur-xl text-left hover:border-blue-400/40 transition-all duration-300 overflow-hidden group shadow-lg hover:shadow-blue-900/50">
                                     <div className="relative">
                                         {/* Template image background */}
-                                        <div className="absolute inset-0 z-0">
-                                           <Image src={exp.image} alt="Experience background" className="w-full h-full object-cover opacity-30" 
-                                           width={1200}
-                                             height={630}
-                                           />
+                                        <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-950/40 via-black/30 to-blue-900/30">
+                                            {exp.image ? (
+                                                <Image
+                                                    src={exp.image}
+                                                    alt="Experience background"
+                                                    className="w-full h-full object-cover opacity-30"
+                                                    width={1200}
+                                                    height={630}
+                                                />
+                                            ) : null}
                                             {/* Dark overlay for text contrast - lighter to show background */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-blue-900/30" />
                                             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/35 transition-colors" />
@@ -129,9 +150,10 @@ export default function ExperienceSection() {
                                                 whileHover={{ x: 5 }}
                                                 className="flex items-center text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
                                             >
-                                                <Link href={exp.link}
-                                                    className="text-sm flex font-semibold">View Details
-                                                     <ExternalLink className="w-4 h-4 ml-2" /></Link>
+                                                <Link href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm flex font-semibold">
+                                                    View Details
+                                                    <ExternalLink className="w-4 h-4 ml-2" />
+                                                </Link>
                                                 
                                             </motion.div>
                                         </CardContent>

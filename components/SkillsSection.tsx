@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Code, Server, Database, Globe, Smartphone, Wrench, GitBranch, Terminal, Cloud, Figma, Chrome, Cpu, Layers, Shield, Zap, BookOpen } from "lucide-react"
+import { Code, Server, Database, Globe, Smartphone, Wrench, GitBranch, Terminal, Cloud, Figma, Cpu, Layers, Zap, BookOpen } from "lucide-react"
 
 export default function SkillsSection() {
     // Categorized skills
@@ -44,6 +44,7 @@ export default function SkillsSection() {
             skills: [
                 { name: "Docker", icon: <Globe className="w-5 h-5" /> },
                 { name: "Nginx", icon: <Server className="w-5 h-5" /> },
+                { name: "n8n Automation", icon: <Zap className="w-5 h-5" /> },
                 { name: "Git", icon: <GitBranch className="w-5 h-5" /> },
                 { name: "GitHub", icon: <Globe className="w-5 h-5" /> },
                 { name: "Linux", icon: <Terminal className="w-5 h-5" /> },
@@ -74,32 +75,37 @@ export default function SkillsSection() {
                         className="text-4xl md:text-6xl font-bold mb-4"
                     >
                         <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                            Technologies & Stacks
+                            Technologies & Stack
                         </span>
                     </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 12 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        viewport={{ once: true }}
+                        className="text-gray-300 max-w-3xl mx-auto text-sm md:text-base"
+                    >
+                        Senior-level frontend focus with product-minded UI/UX, backed by modern backend and automation tooling.
+                    </motion.p>
                 </div>
 
                 {/* Skills Grid - Wrapped in Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.5 }}
                     viewport={{ once: true }}
-                    className="bg-black/50 border border-blue-500/20 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-2xl hover:border-blue-400/30 transition-all duration-300"
+                    className="bg-gradient-to-br from-black/60 via-black/50 to-blue-950/20 border border-blue-500/20 backdrop-blur-xl rounded-2xl p-6 md:p-8 shadow-2xl hover:border-blue-400/30 transition-all duration-300"
                 >
                     <div className="space-y-6">
-                        {skillCategories.map((category, categoryIndex) => (
-                            <motion.div
+                        {skillCategories.map((category) => (
+                            <div
                                 key={category.title}
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: categoryIndex * 0.12 }}
-                                viewport={{ once: true }}
-                                style={{ willChange: 'transform, opacity' }}
+                                style={{ contentVisibility: "auto", containIntrinsicSize: "1px 220px" }}
                                 className="space-y-3"
                             >
                                 {/* Category Title - Centered */}
-                                <h3 className="text-base font-bold text-gray-400 tracking-wider text-center">
+                                <h3 className="text-base font-bold text-blue-200/90 tracking-[0.18em] text-center">
                                     {category.title}
                                 </h3>
 
@@ -107,18 +113,18 @@ export default function SkillsSection() {
                                 <div className="flex flex-wrap gap-2.5 justify-center">
                                     {category.skills.map((skill) => (
                                         <div key={skill.name} className="group">
-                                            <div className="flex items-center gap-2.5 px-4 py-2 bg-black/40 border border-blue-500/20 rounded-lg backdrop-blur-sm hover:border-blue-400/30 hover:bg-black/55 transition-colors duration-200 cursor-pointer">
-                                                <div className="text-blue-400">
+                                            <div className="flex items-center gap-2.5 px-4 py-2 bg-black/45 border border-blue-500/20 rounded-lg hover:border-blue-300/50 hover:bg-blue-950/30 transition-colors duration-200 cursor-pointer">
+                                                <div className="text-blue-400 group-hover:text-blue-300 transition-colors duration-200">
                                                     {skill.icon}
                                                 </div>
-                                                <span className="text-white text-sm font-medium">
+                                                <span className="text-white text-sm font-medium group-hover:text-blue-100 transition-colors duration-200">
                                                     {skill.name}
                                                 </span>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </motion.div>
