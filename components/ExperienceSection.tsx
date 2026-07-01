@@ -48,7 +48,7 @@ export default function ExperienceSection() {
         },
         {
             title: "TALIO",
-            period: "2025 - 4 months internship"",
+            period: "2025 - 4 months internship",
             description:
                 "Building and scaling full-stack web features, integrating automation workflows, and shipping production-ready solutions with a strong focus on UX and performance.",
             skills: ["Next.js", "Node.js", "Supabase", "n8n Automation", "Full-Stack Web Development"],
