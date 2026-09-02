@@ -20,10 +20,10 @@ export default function PortfolioClient() {
   const [activeSection, setActiveSection] = useState<SectionId>("hero")
   const { scrollYProgress } = useScroll()
 
-  // Create observers once
+  // Intersection observer for active navigation section
   useEffect(() => {
     const observers: IntersectionObserver[] = []
-    const options: IntersectionObserverInit = { root: null, rootMargin: "0px 0px -60% 0px", threshold: 0.2 }
+    const options: IntersectionObserverInit = { root: null, rootMargin: "-20% 0px -50% 0px", threshold: 0.1 }
 
     SECTION_IDS.forEach((id) => {
       const el = document.getElementById(id)
@@ -40,34 +40,34 @@ export default function PortfolioClient() {
     return () => observers.forEach((io) => io.disconnect())
   }, [])
 
-  // Smooth progress bar scale
   const progressScaleX = useMemo(
-    () => scrollYProgress, // you can pass through a transform if you want easing
+    () => scrollYProgress,
     [scrollYProgress]
   )
 
   return (
-    <div className="relative min-h-screen  text-white overflow-x-hidden">
-      {/* 🔥 Single reusable animated background (behind everything) */}
-<AnimatedBackground intensity={0.85} />
+    <div className="relative min-h-screen bg-[#050507] text-zinc-100 selection:bg-zinc-800 selection:text-white">
+      {/* Obsidian atmospheric background */}
+      <AnimatedBackground intensity={0.9} />
 
-
-      {/* Top progress bar */}
+      {/* Top sleek silver/white scroll progress bar */}
       <motion.div
-        className="fixed left-0 top-0 h-[3px] bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-600 origin-left z-40"
+        className="fixed left-0 top-0 h-[2px] bg-gradient-to-r from-zinc-600 via-white to-zinc-400 origin-left z-50 shadow-[0_0_8px_rgba(255,255,255,0.4)]"
         style={{ scaleX: progressScaleX }}
       />
 
-      {/* Your navigation (reads activeSection) */}
+      {/* Modern navigation */}
       <Navigation activeSection={activeSection} />
 
-      {/* Content sections */}
-      <HeroSection />
-      <AboutSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <ExperienceSection />
-      <ContactSection />
+      {/* Main sections */}
+      <main className="flex flex-col gap-10 md:gap-16">
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <ExperienceSection />
+        <ContactSection />
+      </main>
 
       <Footer />
     </div>

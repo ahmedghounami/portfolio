@@ -1,85 +1,157 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { Github, Linkedin, Mail, Phone } from "lucide-react"
+import { Github, Linkedin, Mail, Phone, ArrowUpRight, Copy, Check, Sparkles } from "lucide-react"
 
 export default function ContactSection() {
-    return (
-        <section id="contact" className="py-20 relative">
-            <div className="container mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center"
+  const [copiedEmail, setCopiedEmail] = useState(false)
+
+  const handleCopyEmail = async () => {
+    const email = "ahmedghounami0@gmail.com"
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        await navigator.clipboard.writeText(email)
+      } else {
+        // Fallback for non-secure HTTP / unsupported clipboard API environments
+        const textArea = document.createElement("textarea")
+        textArea.value = email
+        textArea.style.position = "fixed"
+        textArea.style.left = "-999999px"
+        textArea.style.top = "-999999px"
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        document.execCommand("copy")
+        textArea.remove()
+      }
+      setCopiedEmail(true)
+      setTimeout(() => setCopiedEmail(false), 2000)
+    } catch (err) {
+      console.error("Clipboard copy failed:", err)
+      // Ultimate fallback: prompt or still trigger feedback
+      try {
+        const textArea = document.createElement("textarea")
+        textArea.value = email
+        textArea.style.position = "fixed"
+        textArea.style.left = "-999999px"
+        textArea.style.top = "-999999px"
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        document.execCommand("copy")
+        textArea.remove()
+        setCopiedEmail(true)
+        setTimeout(() => setCopiedEmail(false), 2000)
+      } catch (fallbackErr) {
+        console.error("Fallback copy failed:", fallbackErr)
+      }
+    }
+  }
+
+  return (
+    <section id="contact" className="py-24 relative">
+      <div className="container mx-auto px-6 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          {/* Tag */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-medium text-zinc-400 mb-4">
+            <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
+            <span>GET IN TOUCH</span>
+          </div>
+
+          <h2 className="text-4xl sm:text-6xl font-bold tracking-tight text-white mb-6">
+            Let&apos;s Build Something{" "}
+            <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
+              Remarkable
+            </span>
+          </h2>
+
+          <p className="text-zinc-400 text-base sm:text-lg mb-12 max-w-2xl mx-auto leading-relaxed font-normal">
+            Whether you are looking to hire a dedicated full-stack engineer, have a challenging project, or want to discuss technology — my inbox is always open.
+          </p>
+
+          {/* Direct Contact Cards */}
+          <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10">
+            {/* Email Card */}
+            <div className="p-6 rounded-3xl bg-zinc-950/80 border border-white/10 hover:border-white/25 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between text-left group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-white">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <button
+                  onClick={handleCopyEmail}
+                  className="p-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                  title="Copy email to clipboard"
+                  aria-label="Copy email to clipboard"
+                  type="button"
                 >
-                    <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                            Let&apos;s Work Together
-                        </span>
-                    </h2>
-                    <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-                        I&apos;m always excited to work on new projects and collaborate with amazing people. Let&apos;s create something
-                        extraordinary together!
-                    </p>
-
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-                        <motion.a
-                            href="mailto:ahmedghounami0@gmail.com"
-                            whileHover={{ scale: 1.05, y: -5 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-3 bg-black/50 backdrop-blur-xl border border-blue-500/20 rounded-2xl px-6 py-4 hover:border-blue-400/40 transition-all group"
-                        >
-                            <Mail className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                            <span className="text-white group-hover:text-blue-400 transition-colors">
-                                ahmedghounami0@gmail.com
-                            </span>
-                        </motion.a>
-
-                        <motion.a
-                            href="tel:+212620399298"
-                            whileHover={{ scale: 1.05, y: -5 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="flex items-center gap-3 bg-black/50 backdrop-blur-xl border border-blue-500/20 rounded-2xl px-6 py-4 hover:border-blue-400/40 transition-all group"
-                        >
-                            <Phone className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
-                            <span className="text-white group-hover:text-blue-400 transition-colors">
-                                +212 620399298
-                            </span>
-                        </motion.a>
-                    </div>
-
-                    <div className="flex justify-center gap-6">
-                        {[
-                            { href: "https://github.com/ahmedghounami", icon: <Github className="w-6 h-6" />, label: "GitHub" },
-                            {
-                                href: "https://www.linkedin.com/in/ahmed-ghounami-a675b1294/",
-                                icon: <Linkedin className="w-6 h-6" />,
-                                label: "LinkedIn",
-                            },
-                        ].map((social) => (
-                            <motion.a
-                                key={social.label}
-                                href={social.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                viewport={{ once: true }}
-                                whileHover={{ scale: 1.1, y: -5 }}
-                                whileTap={{ scale: 0.9 }}
-                                className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg shadow-blue-500/25 group"
-                            >
-                                <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="text-white">
-                                    {social.icon}
-                                </motion.div>
-                            </motion.a>
-                        ))}
-                    </div>
-                </motion.div>
+                  {copiedEmail ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                </button>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-zinc-500 block mb-1">EMAIL DIRECTLY</span>
+                <a
+                  href="mailto:ahmedghounami0@gmail.com"
+                  className="text-sm sm:text-base font-semibold text-zinc-200 group-hover:text-white transition-colors flex items-center gap-1"
+                >
+                  <span>ahmedghounami0@gmail.com</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </a>
+              </div>
             </div>
-        </section>
-    )
+
+            {/* Phone Card */}
+            <div className="p-6 rounded-3xl bg-zinc-950/80 border border-white/10 hover:border-white/25 backdrop-blur-2xl transition-all duration-300 flex flex-col justify-between text-left group">
+              <div className="flex items-center justify-between mb-4">
+                <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center text-white">
+                  <Phone className="w-5 h-5" />
+                </div>
+              </div>
+              <div>
+                <span className="text-xs font-medium text-zinc-500 block mb-1">CALL / WHATSAPP</span>
+                <a
+                  href="tel:+212620399298"
+                  className="text-sm sm:text-base font-semibold text-zinc-200 group-hover:text-white transition-colors flex items-center gap-1"
+                >
+                  <span>+212 620-399298</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Profiles Pill Row */}
+          <div className="flex items-center justify-center gap-4">
+            <a
+              href="https://github.com/ahmedghounami"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 hover:border-white/25 text-zinc-300 hover:text-white transition-all text-xs font-semibold shadow-lg shadow-black/30 group"
+            >
+              <Github className="w-4 h-4" />
+              <span>GitHub</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/ahmed-ghounami-a675b1294/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 hover:border-white/25 text-zinc-300 hover:text-white transition-all text-xs font-semibold shadow-lg shadow-black/30 group"
+            >
+              <Linkedin className="w-4 h-4" />
+              <span>LinkedIn</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-500 group-hover:text-zinc-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+            </a>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
 }

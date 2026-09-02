@@ -1,169 +1,166 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Briefcase, GraduationCap, ExternalLink, Calendar, Sparkles } from "lucide-react"
 import Link from "next/link"
-import { ExternalLink } from "lucide-react"
 import Image from "next/image"
 
 export default function ExperienceSection() {
-    const experiences: {
-        title: string
-        period: string
-        description: string
-        skills: string[]
-        type: string
-        link: string
-        image?: string
-    }[] = [
-        {
-            title: "1337 School",
-            period: "2023 - Present",
-            description:
-                "Intensive peer-to-peer learning program focused on software development, algorithms, and full-stack web development.",
-            skills: ["C/C++", "Web Development", "Algorithms", "Systems Programming", "Git"],
-            type: "Education",
-            link: "https://1337.ma/",
-            image: "https://www.1337.ma/static/3433ada5f4fbe2109e24c53c88499773/25252/cluster.jpg",
-        },
-        {
-            title: "Udemy",
-            period: "2024 - 2025",
-            description: "Comprehensive web development course covering modern technologies and best practices.",
-            skills: ["React", "Node.js", "MongoDB", "API Development", "Authentication"],
-            type: "Course",
-            link: "https://www.udemy.com/",
-            image: "/udemy.png",
-        },
-        {
-            title: "a2xcorp",
-            period: "2025 • 2 months internship",
-            description:
-                "Contributing to the development of web applications, collaborating with cross-functional teams, and implementing new features.",
-            skills: ["React", "Next.js", "Node.js", "Express", "Database Management"],
-            type: "Internship",
-            link: "https://a2xcorp.com/",
-            image: "https://framerusercontent.com/images/TuWoMYgA6buWx4FUpZiwrPMlp0.jpg",
-        },
-        {
-            title: "TALIO",
-            period: "2025 - 4 months internship",
-            description:
-                "Building and scaling full-stack web features, integrating automation workflows, and shipping production-ready solutions with a strong focus on UX and performance.",
-            skills: ["Next.js", "Node.js", "Supabase", "n8n Automation", "Full-Stack Web Development"],
-            type: "Internship",
-            link: "https://www.taliotalent.com/",
-            image: "/talio - logo.png",
-        },
-    ]
+  const experiences = [
+    {
+      title: "TALIO",
+      role: "Full-Stack & Automation Engineer Intern",
+      period: "2025 • 4 months internship",
+      description:
+        "Engineered full-stack features with Next.js, Node.js, and Supabase. Automated mission-critical business workflows via n8n integrations, accelerating data pipelines and improving UX performance across production modules.",
+      skills: ["Next.js", "Node.js", "Supabase", "n8n Automation", "Full-Stack"],
+      type: "Internship",
+      link: "https://www.taliotalent.com/",
+      image: "/talio - logo.png",
+      icon: <Briefcase className="w-4 h-4 text-white" />,
+    },
+    {
+      title: "a2xcorp",
+      role: "Software Engineering Intern",
+      period: "2025 • 2 months internship",
+      description:
+        "Contributed to building full-stack web applications, collaborated with agile cross-functional engineering teams, created RESTful endpoints, and optimized client-side state management.",
+      skills: ["React", "Next.js", "Node.js", "Express", "Database Architecture"],
+      type: "Internship",
+      link: "https://a2xcorp.com/",
+      image: "https://framerusercontent.com/images/TuWoMYgA6buWx4FUpZiwrPMlp0.jpg",
+      icon: <Briefcase className="w-4 h-4 text-white" />,
+    },
+    {
+      title: "1337 Coding School (42 Network)",
+      role: "Software Engineering & Computer Science",
+      period: "2023 - Present",
+      description:
+        "Intensive project-based curriculum without teachers or lectures. Mastered systems programming (C/C++), algorithms, UNIX architecture, socket network programming, and full-stack software development with continuous peer code reviews.",
+      skills: ["C", "C++", "Algorithms", "POSIX Systems", "Computer Graphics", "Networking"],
+      type: "Education",
+      link: "https://1337.ma/",
+      image: "https://www.1337.ma/static/3433ada5f4fbe2109e24c53c88499773/25252/cluster.jpg",
+      icon: <GraduationCap className="w-4 h-4 text-white" />,
+    },
+    {
+      title: "Udemy Certified Specializations",
+      role: "Modern Full-Stack Web Development",
+      period: "2024 - 2025",
+      description:
+        "Comprehensive deep dives into scalable web technologies, covering React, modern Node.js, NoSQL databases, OAuth authentication workflows, and frontend state management.",
+      skills: ["React", "Node.js", "MongoDB", "API Design", "Authentication"],
+      type: "Certification",
+      link: "https://www.udemy.com/",
+      image: "/udemy.png",
+      icon: <GraduationCap className="w-4 h-4 text-white" />,
+    },
+  ]
 
-    return (
-        <section id="experience" className="py-20 relative">
-            <div className="container mx-auto px-6 max-w-6xl">
+  return (
+    <section id="experience" className="py-20 relative">
+      <div className="container mx-auto px-6 max-w-6xl">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-medium text-zinc-400 mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
+            <span>CAREER & ACADEMICS</span>
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+            Education &{" "}
+            <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
+              Experience
+            </span>
+          </h2>
+          <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base">
+            My professional journey across software engineering internships and 1337 School.
+          </p>
+        </motion.div>
+
+        {/* Timeline Grid */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Vertical central glowing line */}
+          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-white/20 via-white/10 to-transparent -translate-x-1/2" />
+
+          <div className="space-y-12">
+            {experiences.map((exp, index) => {
+              const isEven = index % 2 === 0
+              return (
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-16"
+                  key={exp.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15 }}
+                  viewport={{ once: true }}
+                  className={`relative flex flex-col md:flex-row items-start ${
+                    isEven ? "md:flex-row-reverse" : ""
+                  } gap-8 pl-10 md:pl-0`}
                 >
-                    <h2 className="text-4xl md:text-6xl font-bold mb-6">
-                        <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                            Education & Experience
+                  {/* Glowing Timeline Center Node */}
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 top-6 w-7 h-7 rounded-full bg-zinc-950 border-2 border-white/40 flex items-center justify-center shadow-lg shadow-black z-10">
+                    <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                  </div>
+
+                  {/* Card Container */}
+                  <div className="w-full md:w-[calc(50%-2rem)]">
+                    <div className="group p-6 sm:p-7 rounded-3xl bg-zinc-950/80 border border-white/10 hover:border-white/25 backdrop-blur-2xl transition-all duration-300 shadow-xl shadow-black/40">
+                      {/* Top Row: Type & Date */}
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 border border-white/10 text-[11px] font-medium text-zinc-300">
+                          {exp.icon}
+                          <span>{exp.type}</span>
                         </span>
-                    </h2>
+                        <span className="inline-flex items-center gap-1 text-xs text-zinc-400 font-mono">
+                          <Calendar className="w-3 h-3 text-zinc-500" />
+                          <span>{exp.period}</span>
+                        </span>
+                      </div>
 
-                    <div className="max-w-4xl mx-auto relative">
-                        {/* Timeline line */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-700 to-blue-900 rounded-full opacity-30" />
+                      {/* Title & Role */}
+                      <h3 className="text-xl font-bold text-white group-hover:text-zinc-100 transition-colors">
+                        {exp.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm font-semibold text-zinc-300 mb-3">{exp.role}</p>
 
-                        {experiences.map((exp, index) => (
-                            <motion.div
-                                key={exp.title}
-                                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.2 }}
-                                viewport={{ once: true }}
-                                className={`mb-8 relative ${index % 2 === 0 ? "pr-8 md:pr-16" : "pl-8 md:pl-16 md:ml-auto"} md:w-1/2`}
-                            >
-                                {/* Timeline dot */}
-                                <motion.div
-                                    initial={{ scale: 0 }}
-                                    whileInView={{ scale: 1 }}
-                                    transition={{ duration: 0.5, delay: index * 0.2 + 0.5 }}
-                                    className="absolute top-8 w-6 h-6 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full border-4 border-black shadow-lg"
-                                    style={{
-                                        [index % 2 === 0 ? "right" : "left"]: "-12px",
-                                    }}
-                                />
+                      {/* Description */}
+                      <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-5">{exp.description}</p>
 
-                                <Card className="bg-black/70 border-blue-500/20 backdrop-blur-xl text-left hover:border-blue-400/40 transition-all duration-300 overflow-hidden group shadow-lg hover:shadow-blue-900/50">
-                                    <div className="relative">
-                                        {/* Template image background */}
-                                        <div className="absolute inset-0 z-0 bg-gradient-to-br from-blue-950/40 via-black/30 to-blue-900/30">
-                                            {exp.image ? (
-                                                <Image
-                                                    src={exp.image}
-                                                    alt="Experience background"
-                                                    className="w-full h-full object-cover opacity-30"
-                                                    width={1200}
-                                                    height={630}
-                                                />
-                                            ) : null}
-                                            {/* Dark overlay for text contrast - lighter to show background */}
-                                            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-blue-900/30" />
-                                            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/35 transition-colors" />
-                                        </div>
-                                        <CardHeader className="relative z-10">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <CardTitle className="text-white text-xl font-bold group-hover:text-blue-400 transition-colors drop-shadow-lg">
-                                                        {exp.title}
-                                                    </CardTitle>
-                                                    <p className="text-blue-300 font-semibold drop-shadow-md">{exp.period}</p>
-                                                </div>
-                                                <Badge
-                                                    variant="outline"
-                                                    className="border-blue-400/40 bg-blue-500/10 text-blue-300 backdrop-blur-sm font-medium"
-                                                >
-                                                    {exp.type}
-                                                </Badge>
-                                            </div>
-                                            <CardDescription className="text-gray-200 font-medium drop-shadow-md leading-relaxed mt-4">
-                                                {exp.description}
-                                            </CardDescription>
-                                        </CardHeader>
-                                        <CardContent className="relative z-10">
-                                            <div className="flex flex-wrap gap-2 mb-4">
-                                                {exp.skills.map((skill) => (
-                                                    <Badge
-                                                        key={skill}
-                                                        variant="secondary"
-                                                        className="bg-blue-500/20 text-blue-300 border-blue-400/40 hover:bg-blue-400/20 transition-colors backdrop-blur-sm font-medium"
-                                                    >
-                                                        {skill}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                             <motion.div
-                                                whileHover={{ x: 5 }}
-                                                className="flex items-center text-blue-400 hover:text-blue-300 transition-colors cursor-pointer"
-                                            >
-                                                <Link href={exp.link} target="_blank" rel="noopener noreferrer" className="text-sm flex font-semibold">
-                                                    View Details
-                                                    <ExternalLink className="w-4 h-4 ml-2" />
-                                                </Link>
-                                                
-                                            </motion.div>
-                                        </CardContent>
-                                    </div>
-                                </Card>
-                            </motion.div>
+                      {/* Skills */}
+                      <div className="flex flex-wrap gap-1.5 mb-5">
+                        {exp.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className="px-2 py-0.5 rounded-md bg-zinc-900/80 border border-white/5 text-[11px] text-zinc-300 font-medium"
+                          >
+                            {skill}
+                          </span>
                         ))}
+                      </div>
+
+                      {/* External Link */}
+                      <Link
+                        href={exp.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-300 hover:text-white transition-colors group/link"
+                      >
+                        <span>Visit Organization</span>
+                        <ExternalLink className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                      </Link>
                     </div>
+                  </div>
                 </motion.div>
-            </div>
-        </section>
-    )
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }

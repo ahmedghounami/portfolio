@@ -1,15 +1,20 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import PortfolioClient from "../components/PortfolioClient"
 
+export const viewport: Viewport = {
+  themeColor: "#050507",
+  width: "device-width",
+  initialScale: 1,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ahmedghounami.vercel.app"),
   title: {
-    default: "Ahmed Ghounami — Full-Stack Developer",
+    default: "Ahmed Ghounami — Full-Stack & Software Engineer",
     template: "%s | Ahmed Ghounami",
   },
   description:
-    "Portfolio of Ahmed Ghounami — full-stack developer specializing in React, Next.js, Node.js, React Native, and modern web applications.",
+    "Portfolio of Ahmed Ghounami — software engineer specializing in Next.js, React, NestJS, Python, FastAPI, Node.js, and low-level systems (1337 / 42 Network).",
   applicationName: "Ahmed Ghounami Portfolio",
   category: "technology",
   authors: [{ name: "Ahmed Ghounami", url: "https://ahmedghounami.vercel.app" }],
@@ -17,15 +22,27 @@ export const metadata: Metadata = {
   publisher: "Ahmed Ghounami",
   keywords: [
     "Ahmed Ghounami",
-    "Full-stack developer",
+    "Full-stack engineer",
+    "Software Engineer",
     "React developer",
     "Next.js",
+    "NestJS",
+    "Fastify",
+    "FastAPI",
+    "Python",
     "Node.js",
     "React Native",
-    "Web developer portfolio",
-    "Mobile app developer",
-    "Frontend",
-    "Backend",
+    "Expo",
+    "Xcode",
+    "WebSockets",
+    "Docker",
+    "PostgreSQL",
+    "Supabase",
+    "Blockchain",
+    "Web3",
+    "1337",
+    "42 Network",
+    "Systems Programming",
     "TypeScript",
   ],
   alternates: {
@@ -35,26 +52,25 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://ahmedghounami.vercel.app/",
     siteName: "Ahmed Ghounami Portfolio",
-    title: "Ahmed Ghounami — Full-Stack Developer",
+    title: "Ahmed Ghounami — Full-Stack & Software Engineer",
     description:
-      "Explore projects and experience building modern web and mobile applications with React, Next.js, Node.js, and React Native.",
+      "Explore software engineering projects, mobile apps, and systems built with Next.js, React, NestJS, FastAPI, and Node.js.",
     locale: "en_US",
     images: [
       {
-        url: "/https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG",
+        url: "https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG",
         width: 1200,
         height: 630,
-        alt: "Ahmed Ghounami — Full-Stack Developer Portfolio",
+        alt: "Ahmed Ghounami — Software Engineer Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ahmed Ghounami — Full-Stack Developer",
+    title: "Ahmed Ghounami — Full-Stack & Software Engineer",
     description:
-      "Projects, skills, and experience in React, Next.js, Node.js, and React Native.",
-    images: ["/https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG"],
-    
+      "Projects, skills, and experience in Next.js, NestJS, Python, FastAPI, React Native, Node.js, and systems software.",
+    images: ["https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG"],
   },
   robots: {
     index: true,
@@ -71,34 +87,24 @@ export const metadata: Metadata = {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon.png", sizes: "192x192", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  themeColor: "#0b1220",
   referrer: "origin-when-cross-origin",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    viewportFit: "cover",
-  },
-  
   other: {
     "github:url": "https://github.com/ahmedghounami",
     "linkedin:url": "https://www.linkedin.com/in/ahmed-ghounami-a675b1294/",
   },
 }
 
-
-
-
 export default function Page() {
-  // Server component by default — nice and minimal
   return <PortfolioClient />
 }
