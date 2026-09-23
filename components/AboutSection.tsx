@@ -74,7 +74,7 @@ export default function AboutSection() {
                 My software journey took root at <strong className="text-white">1337 Coding School</strong> (part of the global 42 Network). Without traditional teachers or lectures, I mastered problem-solving through intense peer-to-peer collaboration, code reviews, and project-driven learning.
               </p>
               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                From writing our own HTTP web server from scratch in C++ to building full-stack web platforms, NestJS backends, and mobile companion apps with React Native & Expo, I cultivate an obsession for clean architecture, edge-case resilience, and slick user interfaces.
+                From engineering our own non-blocking HTTP web server in C++ and BitTorrent video streaming engines (Hypertube), to architecting real-time multiplayer arenas (Red Tetris & ft_transcendence) and mobile companion ecosystems (Swifty Companion), I cultivate an obsession for resilient system design, sub-millisecond responsiveness, and pixel-perfect interfaces.
               </p>
             </div>
 

@@ -13,8 +13,56 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ahmed Ghounami — Full-Stack & Software Engineer",
-  description: "Full Stack Software Engineer specializing in Next.js, React, NestJS, and systems programming (1337 / 42 Network).",
+  metadataBase: new URL("https://ahmedghounami.dev"),
+  title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
+  description:
+    "Portfolio of Ahmed Ghounami — Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Specializing in Next.js, React, Node.js, NestJS, Socket.io real-time apps, streaming protocols, and low-level C/C++ architecture.",
+  keywords: [
+    "Ahmed Ghounami",
+    "Software Engineer",
+    "Full-Stack Developer",
+    "1337 Coding School",
+    "42 Network",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "NestJS",
+    "Node.js",
+    "Socket.io",
+    "Red Tetris",
+    "Hypertube",
+    "ft_transcendence",
+    "WebServ",
+    "React Native",
+    "Docker",
+    "DevOps",
+  ],
+  authors: [{ name: "Ahmed Ghounami", url: "https://github.com/ahmedghounami" }],
+  creator: "Ahmed Ghounami",
+  openGraph: {
+    title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
+    description:
+      "Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Explore projects in real-time gaming, BitTorrent streaming, mobile companion apps, and C++ systems.",
+    url: "https://ahmedghounami.dev",
+    siteName: "Ahmed Ghounami Portfolio",
+    images: [
+      {
+        url: "/profile.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ahmed Ghounami — Software Engineer",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
+    description:
+      "Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Explore projects in real-time gaming, BitTorrent streaming, and C++ systems.",
+    images: ["/profile.jpg"],
+  },
   icons: {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
