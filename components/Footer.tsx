@@ -17,7 +17,7 @@ export default function Footer() {
               Ahmed Ghounami <span className="text-zinc-500 font-normal">/ Software Engineer</span>
             </p>
             <p className="text-xs text-zinc-500 mt-1">
-              Built with Next.js, React 19, TypeScript & Tailwind CSS • 1337 (42 Network)
+                  Built with Next.js, React 19, TypeScript & Tailwind CSS • 42 Paris
             </p>
           </div>
 

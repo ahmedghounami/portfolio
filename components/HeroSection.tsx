@@ -50,7 +50,7 @@ export default function HeroSection() {
               className="text-base sm:text-lg text-zinc-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal"
             >
               Hi, I&apos;m <span className="text-white font-medium">Ahmed Ghounami</span>. Full-Stack & Systems Software
-              Engineer trained at <span className="text-zinc-200 font-medium">1337 (42 Network)</span>. I engineer
+              Engineer trained at <span className="text-zinc-200 font-medium">42 Paris</span>. I engineer
               high-performance web apps, mobile systems, scalable backend architectures, and explore Web3 innovations.
             </motion.p>
 
@@ -156,7 +156,7 @@ export default function HeroSection() {
               <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full p-2 bg-gradient-to-b from-zinc-800/80 via-zinc-900/90 to-black border border-white/15 shadow-2xl shadow-black">
                 <div className="w-full h-full rounded-full overflow-hidden relative">
                   <img
-                    src="https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG"
+                    src="/profile.jpg"
                     alt="Ahmed Ghounami"
                     className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
                   />
@@ -164,7 +164,7 @@ export default function HeroSection() {
                 </div>
               </div>
 
-              {/* Floating 1337 Badge */}
+              {/* Floating 42 Paris badge */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -172,7 +172,7 @@ export default function HeroSection() {
                 className="absolute -bottom-2 -left-2 sm:-left-4 px-3.5 py-1.5 rounded-xl bg-zinc-950/90 border border-white/15 backdrop-blur-xl shadow-xl flex items-center gap-2"
               >
                 <div className="w-2 h-2 rounded-full bg-white" />
-                <span className="text-xs font-mono font-semibold text-white tracking-wider">1337 / 42 NETWORK</span>
+                <span className="text-xs font-mono font-semibold text-white tracking-wider">42 PARIS</span>
               </motion.div>
 
               {/* Floating Full-Stack badge */}

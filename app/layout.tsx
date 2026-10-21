@@ -16,12 +16,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ahmedghounami.dev"),
   title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
   description:
-    "Portfolio of Ahmed Ghounami — Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Specializing in Next.js, React, Node.js, NestJS, Socket.io real-time apps, streaming protocols, and low-level C/C++ architecture.",
+    "Portfolio of Ahmed Ghounami — Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Specializing in Next.js, React, Node.js, NestJS, Socket.io real-time apps, streaming protocols, and low-level C/C++ architecture.",
   keywords: [
     "Ahmed Ghounami",
     "Software Engineer",
     "Full-Stack Developer",
-    "1337 Coding School",
+    "42 Paris",
     "42 Network",
     "Next.js",
     "React",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
     description:
-      "Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Explore projects in real-time gaming, BitTorrent streaming, mobile companion apps, and C++ systems.",
+      "Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Explore projects in real-time gaming, BitTorrent streaming, mobile companion apps, and C++ systems.",
     url: "https://ahmedghounami.dev",
     siteName: "Ahmed Ghounami Portfolio",
     images: [
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
     description:
-      "Full-Stack & Systems Software Engineer trained at 1337 (42 Network). Explore projects in real-time gaming, BitTorrent streaming, and C++ systems.",
+      "Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Explore projects in real-time gaming, BitTorrent streaming, and C++ systems.",
     images: ["/profile.jpg"],
   },
   icons: {

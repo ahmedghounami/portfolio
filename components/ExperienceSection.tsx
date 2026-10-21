@@ -32,15 +32,15 @@ export default function ExperienceSection() {
       icon: <Briefcase className="w-4 h-4 text-white" />,
     },
     {
-      title: "1337 Coding School (42 Network)",
+      title: "42 Paris",
       role: "Software Engineering & Computer Science",
       period: "2023 - Present",
       description:
-        "Intensive project-based curriculum without teachers or lectures. Mastered systems programming (C/C++), algorithms, UNIX architecture, socket network programming, and full-stack software development with continuous peer code reviews.",
+        "Started in 1337 Khouribga and currently continuing my studies at 42 Paris to complete RNCP level 7. Intensive project-based curriculum without teachers or lectures, with deep focus on systems programming (C/C++), algorithms, UNIX architecture, socket networking, and full-stack software development through continuous peer code reviews.",
       skills: ["C", "C++", "Algorithms", "POSIX Systems", "Computer Graphics", "Networking"],
       type: "Education",
-      link: "https://1337.ma/",
-      image: "https://www.1337.ma/static/3433ada5f4fbe2109e24c53c88499773/25252/cluster.jpg",
+      link: "https://42.fr/en/homepage/",
+      image: "/profile.jpg",
       icon: <GraduationCap className="w-4 h-4 text-white" />,
     },
     {
@@ -79,7 +79,7 @@ export default function ExperienceSection() {
             </span>
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base">
-            My professional journey across software engineering internships and 1337 School.
+            My professional journey across software engineering internships and 42 Paris.
           </p>
         </motion.div>
 

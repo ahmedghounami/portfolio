@@ -26,7 +26,8 @@ export default function AboutSection() {
   ]
 
   const highlights = [
-    "Intensive peer-to-peer software engineering at 1337 (42 Network)",
+    "Started at 1337 Khouribga, now continuing RNCP level 7 studies at 42 Paris",
+    "Intensive peer-to-peer software engineering at 42 Paris",
     "Hands-on production internships building scalable web platforms",
     "Deep foundation in algorithms, memory management & system internals",
     "Clean code advocate focusing on maintainability, performance & UX",
@@ -69,9 +70,9 @@ export default function AboutSection() {
             className="lg:col-span-7 p-8 rounded-3xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl flex flex-col justify-between"
           >
             <div>
-              <h3 className="text-xl font-bold text-white mb-4">The 1337 / 42 Foundation</h3>
+              <h3 className="text-xl font-bold text-white mb-4">The 42 Paris Foundation</h3>
               <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-4">
-                My software journey took root at <strong className="text-white">1337 Coding School</strong> (part of the global 42 Network). Without traditional teachers or lectures, I mastered problem-solving through intense peer-to-peer collaboration, code reviews, and project-driven learning.
+                My software journey took root at <strong className="text-white">42 Paris</strong> (part of the global 42 Network). Without traditional teachers or lectures, I mastered problem-solving through intense peer-to-peer collaboration, code reviews, and project-driven learning.
               </p>
               <p className="text-zinc-400 text-sm leading-relaxed mb-6">
                 From engineering our own non-blocking HTTP web server in C++ and BitTorrent video streaming engines (Hypertube), to architecting real-time multiplayer arenas (Red Tetris & ft_transcendence) and mobile companion ecosystems (Swifty Companion), I cultivate an obsession for resilient system design, sub-millisecond responsiveness, and pixel-perfect interfaces.
@@ -99,7 +100,7 @@ export default function AboutSection() {
           >
             {[
               { num: "3+", label: "Years Coding Experience", sub: "Deep technical rigor" },
-              { num: "1337", label: "42 Network Pedigree", sub: "Strict peer-evaluation" },
+              { num: "42", label: "Paris Campus", sub: "Strict peer-evaluation" },
               { num: "100%", label: "Curiosity & Drive", sub: "Continuous learner" },
               { num: "Full", label: "Stack Mastery", sub: "Frontend to Kernel" },
             ].map((stat, i) => (

@@ -17,10 +17,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "www.1337.ma",
-      },
-      {
-        protocol: "https",
         hostname: "framerusercontent.com",
       },
       {

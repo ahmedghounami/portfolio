@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Ahmed Ghounami",
   },
   description:
-    "Portfolio of Ahmed Ghounami — software engineer specializing in Next.js, React, NestJS, Python, FastAPI, Node.js, and low-level systems (1337 / 42 Network).",
+    "Portfolio of Ahmed Ghounami — software engineer specializing in Next.js, React, NestJS, Python, FastAPI, Node.js, and low-level systems (42 Paris / 42 Network).",
   applicationName: "Ahmed Ghounami Portfolio",
   category: "technology",
   authors: [{ name: "Ahmed Ghounami", url: "https://ahmedghounami.vercel.app" }],
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "Supabase",
     "Blockchain",
     "Web3",
-    "1337",
+    "42 Paris",
     "42 Network",
     "Systems Programming",
     "TypeScript",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://cdn.intra.42.fr/users/7ec5d8829b0f0d9e26713b331df85178/aghounam.JPG",
+        url: "https://cdn.intra.42.fr/users/68f4d924158e82e779bee1df020e0834/aghounam.JPG",
         width: 1200,
         height: 630,
         alt: "Ahmed Ghounami — Software Engineer Portfolio",
