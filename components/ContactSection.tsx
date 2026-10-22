@@ -116,10 +116,10 @@ export default function ContactSection() {
               <div>
                 <span className="text-xs font-medium text-zinc-500 block mb-1">CALL / WHATSAPP</span>
                 <a
-                  href="tel:+212620399298"
+                  href="tel:+33744270326"
                   className="text-sm sm:text-base font-semibold text-zinc-200 group-hover:text-white transition-colors flex items-center gap-1"
                 >
-                  <span>+212 620-399298</span>
+                  <span>+33 7 44 27 03 26</span>
                   <ArrowUpRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                 </a>
               </div>
