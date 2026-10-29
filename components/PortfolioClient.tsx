@@ -1,75 +1,102 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
-import { motion, useScroll } from "framer-motion"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion"
+import { Check } from "lucide-react"
 
-import Navigation from "../components/Navigation"
-import HeroSection from "../components/HeroSection"
-import AboutSection from "../components/AboutSection"
-import SkillsSection from "../components/SkillsSection"
-import ProjectsSection from "../components/ProjectsSection"
-import ExperienceSection from "../components/ExperienceSection"
-import ContactSection from "../components/ContactSection"
-import Footer from "../components/Footer"
+import Navigation from "./Navigation"
+import HeroSection from "./HeroSection"
+import Marquee from "./Marquee"
+import AboutSection from "./AboutSection"
+import PortifySection from "./PortifySection"
+import ProjectsSection from "./ProjectsSection"
+import SkillsSection from "./SkillsSection"
+import ExperienceSection from "./ExperienceSection"
+import ContactSection from "./ContactSection"
+import Footer from "./Footer"
 import AnimatedBackground from "./AnimatedBackground"
-
-const SECTION_IDS = ["hero", "about", "skills", "projects", "experience", "contact"] as const
-type SectionId = (typeof SECTION_IDS)[number]
+import Preloader from "./Preloader"
+import Cursor from "./Cursor"
+import CommandPalette from "./CommandPalette"
+import { navItems } from "@/lib/data"
 
 export default function PortfolioClient() {
-  const [activeSection, setActiveSection] = useState<SectionId>("hero")
+  const [ready, setReady] = useState(false)
+  const [activeSection, setActiveSection] = useState("hero")
+  const [toast, setToast] = useState<string | null>(null)
+  const toastTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 })
 
-  // Intersection observer for active navigation section
-  useEffect(() => {
-    const observers: IntersectionObserver[] = []
-    const options: IntersectionObserverInit = { root: null, rootMargin: "-20% 0px -50% 0px", threshold: 0.1 }
-
-    SECTION_IDS.forEach((id) => {
-      const el = document.getElementById(id)
-      if (!el) return
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(id)
-        })
-      }, options)
-      io.observe(el)
-      observers.push(io)
-    })
-
-    return () => observers.forEach((io) => io.disconnect())
+  const onReady = useCallback(() => setReady(true), [])
+  const showToast = useCallback((message: string) => {
+    clearTimeout(toastTimer.current)
+    setToast(message)
+    toastTimer.current = setTimeout(() => setToast(null), 2200)
   }, [])
 
-  const progressScaleX = useMemo(
-    () => scrollYProgress,
-    [scrollYProgress]
-  )
+  // Track which section is in the middle of the viewport for the nav indicator.
+  // "projects" belongs to the Work nav item.
+  useEffect(() => {
+    const ids = ["hero", "about", "work", "projects", "stack", "journey", "contact"]
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          const id = entry.target.id === "projects" ? "work" : entry.target.id
+          setActiveSection(navItems.some((n) => n.id === id) ? id : "hero")
+        })
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) io.observe(el)
+    })
+    return () => io.disconnect()
+  }, [])
 
   return (
-    <div className="relative min-h-screen bg-[#050507] text-zinc-100 selection:bg-zinc-800 selection:text-white">
-      {/* Obsidian atmospheric background */}
-      <AnimatedBackground intensity={0.9} />
+    <div className="relative min-h-screen">
+      <Preloader onDone={onReady} />
+      <AnimatedBackground />
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-[60] overflow-hidden">
+        <div className="grain" />
+      </div>
+      <Cursor />
+      <CommandPalette onToast={showToast} />
 
-      {/* Top sleek silver/white scroll progress bar */}
-      <motion.div
-        className="fixed left-0 top-0 h-[2px] bg-gradient-to-r from-zinc-600 via-white to-zinc-400 origin-left z-50 shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-        style={{ scaleX: progressScaleX }}
-      />
+      <motion.div className="fixed inset-x-0 top-0 z-[55] h-[2px] origin-left bg-signal" style={{ scaleX: progress }} />
 
-      {/* Modern navigation */}
-      <Navigation activeSection={activeSection} />
+      <Navigation activeSection={activeSection} ready={ready} />
 
-      {/* Main sections */}
-      <main className="flex flex-col gap-10 md:gap-16">
-        <HeroSection />
+      <main>
+        <HeroSection ready={ready} />
+        <Marquee />
         <AboutSection />
-        <SkillsSection />
+        <PortifySection />
         <ProjectsSection />
+        <SkillsSection />
         <ExperienceSection />
-        <ContactSection />
+        <ContactSection onToast={showToast} />
       </main>
 
       <Footer />
+
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            role="status"
+            initial={{ opacity: 0, y: 20, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: 20, x: "-50%" }}
+            className="fixed bottom-6 left-1/2 z-[85] flex items-center gap-2 rounded-full border border-line-strong bg-elev px-4 py-2.5 text-sm text-fg shadow-2xl shadow-black"
+          >
+            <Check className="h-4 w-4 text-signal" />
+            {toast}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

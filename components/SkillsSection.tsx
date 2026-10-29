@@ -1,155 +1,53 @@
 "use client"
 
 import { motion } from "framer-motion"
-import {
-  Code,
-  Server,
-  Database,
-  Smartphone,
-  Layers,
-  Zap,
-  GitBranch,
-  Terminal,
-  Globe,
-  Cpu,
-  Figma,
-  Cloud,
-  Wrench,
-  Sparkles,
-  Link2,
-  Shield,
-  Radio,
-  FileCode,
-  Workflow,
-  RefreshCw,
-} from "lucide-react"
+import { stack } from "@/lib/data"
+import { Reveal, SectionHeading, Spotlight } from "./motion"
+
+const SPANS = ["lg:col-span-2", "lg:col-span-2", "lg:col-span-2", "lg:col-span-2", "lg:col-span-1", "lg:col-span-3"]
 
 export default function SkillsSection() {
-  const skillCategories = [
-    {
-      title: "PROGRAMMING & LANGUAGES",
-      skills: [
-        { name: "C", icon: <Cpu className="w-4 h-4" /> },
-        { name: "C++", icon: <Cpu className="w-4 h-4" /> },
-        { name: "Python", icon: <FileCode className="w-4 h-4" /> },
-        { name: "TypeScript", icon: <Code className="w-4 h-4" /> },
-        { name: "JavaScript (ES6+)", icon: <Code className="w-4 h-4" /> },
-        { name: "HTML5", icon: <Code className="w-4 h-4" /> },
-        { name: "CSS3", icon: <Layers className="w-4 h-4" /> },
-        { name: "Tailwind CSS", icon: <Layers className="w-4 h-4" /> },
-      ],
-    },
-    {
-      title: "FRAMEWORKS & TECHNOLOGIES",
-      skills: [
-        { name: "Next.js (App Router)", icon: <Globe className="w-4 h-4" /> },
-        { name: "ReactJS", icon: <Code className="w-4 h-4" /> },
-        { name: "Redux Toolkit", icon: <Layers className="w-4 h-4" /> },
-        { name: "NestJS", icon: <Server className="w-4 h-4" /> },
-        { name: "Node.js", icon: <Server className="w-4 h-4" /> },
-        { name: "Fastify", icon: <Server className="w-4 h-4" /> },
-        { name: "Express.js", icon: <Wrench className="w-4 h-4" /> },
-        { name: "FastAPI", icon: <Zap className="w-4 h-4" /> },
-        { name: "React Native", icon: <Smartphone className="w-4 h-4" /> },
-        { name: "Socket.io & WebSockets", icon: <Radio className="w-4 h-4" /> },
-        { name: "REST APIs", icon: <Cloud className="w-4 h-4" /> },
-        { name: "OAuth 2.0", icon: <Shield className="w-4 h-4" /> },
-      ],
-    },
-    {
-      title: "DATABASES & CLOUD STORAGE",
-      skills: [
-        { name: "PostgreSQL", icon: <Database className="w-4 h-4" /> },
-        { name: "Supabase", icon: <Database className="w-4 h-4" /> },
-        { name: "MongoDB", icon: <Database className="w-4 h-4" /> },
-        { name: "SQLite", icon: <Database className="w-4 h-4" /> },
-        { name: "MySQL", icon: <Database className="w-4 h-4" /> },
-      ],
-    },
-    {
-      title: "DEVELOPER TOOLS & INFRASTRUCTURE",
-      skills: [
-        { name: "Docker & Compose", icon: <Globe className="w-4 h-4" /> },
-        { name: "FFmpeg & Streaming", icon: <Zap className="w-4 h-4" /> },
-        { name: "n8n Automation", icon: <Workflow className="w-4 h-4" /> },
-        { name: "Git & GitHub", icon: <GitBranch className="w-4 h-4" /> },
-        { name: "Jest & Unit Testing", icon: <Shield className="w-4 h-4" /> },
-        { name: "Postman", icon: <Cloud className="w-4 h-4" /> },
-        { name: "Expo & Xcode", icon: <Smartphone className="w-4 h-4" /> },
-        { name: "Linux / POSIX", icon: <Terminal className="w-4 h-4" /> },
-        { name: "Figma", icon: <Figma className="w-4 h-4" /> },
-      ],
-    },
-    {
-      title: "SPECIALIZATIONS & METHODOLOGY",
-      skills: [
-        { name: "BitTorrent & Media Pipelines", icon: <Radio className="w-4 h-4" /> },
-        { name: "Real-Time Game Synchronization", icon: <Zap className="w-4 h-4" /> },
-        { name: "Blockchain & Web3 Basics", icon: <Link2 className="w-4 h-4" /> },
-        { name: "Peer-to-Peer Code Review", icon: <Sparkles className="w-4 h-4" /> },
-      ],
-    },
-  ]
-
   return (
-    <section id="skills" className="py-20 relative">
-      <div className="container mx-auto px-6 max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-medium text-zinc-400 mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-zinc-300" />
-            <span>TECHNICAL EXPERTISE</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-            Tech Stack &{" "}
-            <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
-              Capabilities
-            </span>
-          </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Comprehensive skill set spanning programming languages, backend frameworks, mobile tools, databases, and DevOps automation.
-          </p>
-        </motion.div>
+    <section id="stack" className="relative py-28 sm:py-40">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <SectionHeading
+          index="04"
+          label="Stack"
+          title="Tools I reach for,"
+          accent="from kernel to pixel."
+          intro="Low-level C and C++ taught me how computers work. Modern TypeScript lets me ship products quickly. I use both."
+        />
 
-        {/* Skills Container */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="p-8 sm:p-10 rounded-3xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-8"
-        >
-          {skillCategories.map((category) => (
-            <div key={category.title} className="space-y-3.5">
-              <div className="flex items-center gap-3">
-                <span className="text-[11px] font-mono font-bold tracking-[0.2em] text-zinc-400 uppercase">
-                  {category.title}
-                </span>
-                <div className="h-[1px] flex-1 bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
-              </div>
-
-              <div className="flex flex-wrap gap-2.5">
-                {category.skills.map((skill) => (
-                  <motion.div
-                    key={skill.name}
-                    whileHover={{ scale: 1.04, y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-zinc-900/70 border border-white/10 hover:border-white/25 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-all cursor-default text-xs sm:text-sm font-medium shadow-sm group"
-                  >
-                    <span className="text-zinc-400 group-hover:text-white transition-colors">{skill.icon}</span>
-                    <span>{skill.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          {stack.map((group, gi) => (
+            <Reveal key={group.title} delay={(gi % 3) * 0.08} className={SPANS[gi] ?? "lg:col-span-2"}>
+              <Spotlight className="group h-full rounded-3xl border border-line bg-white/[0.015] p-6 transition-colors hover:border-line-strong">
+                <div className="mb-6 flex items-center justify-between">
+                  <span className="font-mono text-[11px] text-dim">
+                    ~/stack/<span className="text-signal">{group.code}</span>.ts
+                  </span>
+                  <span className="font-mono text-[10px] text-dim">{String(group.items.length).padStart(2, "0")}</span>
+                </div>
+                <h3 className="mb-5 text-2xl font-medium tracking-tight text-fg">{group.title}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item, i) => (
+                    <motion.span
+                      key={item}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 + i * 0.04, type: "spring", stiffness: 300, damping: 20 }}
+                      whileHover={{ y: -3 }}
+                      className="cursor-default rounded-lg border border-line bg-bg/60 px-3 py-1.5 text-[13px] text-muted transition-colors hover:border-signal/60 hover:text-fg"
+                    >
+                      {item}
+                    </motion.span>
+                  ))}
+                </div>
+              </Spotlight>
+            </Reveal>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )

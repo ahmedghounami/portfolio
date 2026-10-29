@@ -1,194 +1,164 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { ArrowRight, FileText, Sparkles, Github, Linkedin, Mail, Terminal } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion"
+import { ArrowDownRight, ArrowUpRight, FileText } from "lucide-react"
+import { portify, profile } from "@/lib/data"
+import { EASE, Magnetic, SplitText } from "./motion"
+import Terminal from "./Terminal"
 
-export default function HeroSection() {
+function useParisTime() {
+  const [time, setTime] = useState<string | null>(null)
+  useEffect(() => {
+    const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: profile.timezone })
+    const tick = () => setTime(fmt.format(new Date()))
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
+  return time
+}
+
+function RoleRotator({ start }: { start: boolean }) {
+  const [i, setI] = useState(0)
+  const reduce = useReducedMotion()
+  useEffect(() => {
+    if (!start || reduce) return
+    const id = setInterval(() => setI((n) => (n + 1) % profile.roles.length), 2600)
+    return () => clearInterval(id)
+  }, [start, reduce])
+
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative pt-28 pb-16">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left / Hero Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 text-center lg:text-left order-2 lg:order-1"
-          >
-            {/* Status & Role Pill */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 backdrop-blur-md mb-6 shadow-sm"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              <span className="text-xs font-medium text-zinc-300">Available for innovative roles & contracts</span>
-              <Sparkles className="w-3.5 h-3.5 text-zinc-400" />
-            </motion.div>
+    <span className="relative inline-flex h-[1.2em] overflow-hidden align-bottom">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={profile.roles[i]}
+          initial={{ y: "100%" }}
+          animate={{ y: "0%" }}
+          exit={{ y: "-100%" }}
+          transition={{ duration: 0.5, ease: EASE }}
+          className="font-serif italic text-signal"
+        >
+          {profile.roles[i].toLowerCase()}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.08]"
-            >
-              Architecting{" "}
-              <span className="bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
-                Exceptional
+export default function HeroSection({ ready }: { ready: boolean }) {
+  const ref = useRef<HTMLElement>(null)
+  const time = useParisTime()
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] })
+  const nameY = useTransform(scrollYProgress, [0, 1], ["0%", "35%"])
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0])
+
+  const fadeUp = (delay: number) => ({
+    initial: { opacity: 0, y: 20 },
+    animate: ready ? { opacity: 1, y: 0 } : undefined,
+    transition: { duration: 0.9, delay, ease: EASE },
+  })
+
+  return (
+    <section ref={ref} id="hero" className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-32">
+      <motion.div style={{ y: nameY, opacity: fade }} className="mx-auto w-full max-w-6xl px-5 sm:px-6">
+        <motion.div {...fadeUp(0.1)} className="mb-8 flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-dim">
+          <span className="flex items-center gap-2 text-muted">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            Open to full-time roles & freelance
+          </span>
+          <span>
+            {profile.location} · <span className="tabular-nums text-muted">{time ?? "--:--:--"}</span>
+          </span>
+        </motion.div>
+
+        <div className="grid items-end gap-10 lg:grid-cols-12">
+          <div className="min-w-0 lg:col-span-7">
+            <h1 className="text-[17vw] font-semibold leading-[0.85] tracking-[-0.06em] text-fg sm:text-[13vw] lg:text-[8.6rem]">
+              <SplitText text={profile.firstName} animateOnMount={ready} delay={0.15} stagger={0.05} className="block" />
+              <span className="block font-serif italic font-normal tracking-[-0.03em] text-muted">
+                <SplitText text={`${profile.lastName}.`} animateOnMount={ready} delay={0.4} stagger={0.045} />
               </span>
-              <br />
-              <span className="text-zinc-400 font-normal">Digital Experiences.</span>
-            </motion.h1>
+            </h1>
 
-            {/* Subheading */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="text-base sm:text-lg text-zinc-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal"
-            >
-              Hi, I&apos;m <span className="text-white font-medium">Ahmed Ghounami</span>. Full-Stack & Systems Software
-              Engineer trained at <span className="text-zinc-200 font-medium">42 Paris</span>. I engineer
-              high-performance web apps, mobile systems, scalable backend architectures, and explore Web3 innovations.
+            <motion.p {...fadeUp(0.9)} className="mt-8 max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
+              <span className="text-fg">
+                <RoleRotator start={ready} />
+              </span>{" "}
+              trained at 42 Paris. I design and ship products end to end, from C++ socket servers to the{" "}
+              <a href={portify.url} target="_blank" rel="noopener noreferrer" className="text-fg underline decoration-signal/60 underline-offset-4 hover:decoration-signal">
+                portfolio builder
+              </a>{" "}
+              people use today.
             </motion.p>
 
-            {/* Tech Chips */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-2 mb-8"
-            >
-              {[
-                { label: "Next.js & React", dot: "bg-white" },
-                { label: "NestJS & Node.js", dot: "bg-emerald-400" },
-                { label: "React Native & Expo", dot: "bg-cyan-400" },
-                { label: "Blockchain & Web3", dot: "bg-purple-400" },
-                { label: "C / C++ Systems", dot: "bg-blue-400" },
-              ].map((chip) => (
-                <div
-                  key={chip.label}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-zinc-900/60 border border-white/5 text-xs text-zinc-300 backdrop-blur-sm"
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full ${chip.dot}`} />
-                  <span>{chip.label}</span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4"
-            >
-              <a
-                href="#projects"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-zinc-950 font-semibold text-sm hover:bg-zinc-200 transition-all shadow-xl shadow-white/5 group"
-              >
-                <span>Explore Projects</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-
-              <a
-                href="/cv.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 hover:text-white font-medium text-sm border border-white/10 hover:border-white/20 transition-all backdrop-blur-md"
-              >
-                <FileText className="w-4 h-4 text-zinc-400" />
-                <span>Download CV</span>
-              </a>
-
-              {/* Quick Social Buttons */}
-              <div className="flex items-center gap-2 pt-2 sm:pt-0">
+            <motion.div {...fadeUp(1.05)} className="mt-10 flex flex-wrap items-center gap-3">
+              <Magnetic>
                 <a
-                  href="https://github.com/ahmedghounami"
+                  href="#work"
+                  data-cursor="Explore"
+                  className="group inline-flex items-center gap-3 rounded-full bg-signal py-3.5 pl-6 pr-3 text-sm font-semibold text-black transition-transform"
+                >
+                  See my work
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black text-signal transition-transform duration-500 group-hover:rotate-[-45deg]">
+                    <ArrowDownRight className="h-4 w-4" />
+                  </span>
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a
+                  href={profile.cv}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="GitHub Profile"
-                  className="p-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 hover:border-white/25 text-zinc-400 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 rounded-full border border-line-strong px-5 py-3.5 text-sm font-medium text-fg transition-colors hover:border-fg"
                 >
-                  <Github className="w-4 h-4" />
+                  <FileText className="h-4 w-4 text-muted" />
+                  Download CV
                 </a>
-                <a
-                  href="https://www.linkedin.com/in/ahmed-ghounami-a675b1294/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn Profile"
-                  className="p-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 hover:border-white/25 text-zinc-400 hover:text-white transition-colors"
-                >
-                  <Linkedin className="w-4 h-4" />
+              </Magnetic>
+              <div className="flex items-center gap-1 pl-1 font-mono text-xs">
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="px-2 py-2 text-muted hover:text-signal">
+                  GitHub<ArrowUpRight className="inline h-3 w-3" />
                 </a>
-                <a
-                  href="mailto:ahmedghounami0@gmail.com"
-                  aria-label="Email Ahmed"
-                  className="p-3 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 hover:border-white/25 text-zinc-400 hover:text-white transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="px-2 py-2 text-muted hover:text-signal">
+                  LinkedIn<ArrowUpRight className="inline h-3 w-3" />
                 </a>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
 
-          {/* Right / Luxury Avatar Showcase */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="lg:col-span-5 flex justify-center order-1 lg:order-2"
+            initial={{ opacity: 0, y: 40, rotateX: 12 }}
+            animate={ready ? { opacity: 1, y: 0, rotateX: 0 } : undefined}
+            transition={{ duration: 1.1, delay: 0.6, ease: EASE }}
+            style={{ transformPerspective: 1200 }}
+            className="min-w-0 lg:col-span-5"
           >
-            <div className="relative group">
-              {/* Subtle ambient halo */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-zinc-700/30 via-white/10 to-zinc-800/30 rounded-full blur-2xl opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
-
-              {/* Outer decorative ring */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-3.5 rounded-full border border-dashed border-white/10"
-              />
-
-              {/* Main Avatar Container */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full p-2 bg-gradient-to-b from-zinc-800/80 via-zinc-900/90 to-black border border-white/15 shadow-2xl shadow-black">
-                <div className="w-full h-full rounded-full overflow-hidden relative">
-                  <img
-                    src="/profile.jpg"
-                    alt="Ahmed Ghounami"
-                    className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                </div>
-              </div>
-
-              {/* Floating 42 Paris badge */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="absolute -bottom-2 -left-2 sm:-left-4 px-3.5 py-1.5 rounded-xl bg-zinc-950/90 border border-white/15 backdrop-blur-xl shadow-xl flex items-center gap-2"
-              >
-                <div className="w-2 h-2 rounded-full bg-white" />
-                <span className="text-xs font-mono font-semibold text-white tracking-wider">42 PARIS</span>
-              </motion.div>
-
-              {/* Floating Full-Stack badge */}
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="absolute -top-2 -right-2 sm:-right-4 px-3 py-1.5 rounded-xl bg-zinc-950/90 border border-white/15 backdrop-blur-xl shadow-xl flex items-center gap-2"
-              >
-                <Terminal className="w-3.5 h-3.5 text-zinc-300" />
-                <span className="text-xs font-semibold text-zinc-200">Software Engineer</span>
-              </motion.div>
-            </div>
+            <Terminal start={ready} />
           </motion.div>
         </div>
-      </div>
+      </motion.div>
+
+      <motion.a
+        href="#about"
+        initial={{ opacity: 0 }}
+        animate={ready ? { opacity: 1 } : undefined}
+        transition={{ delay: 1.6 }}
+        className="mx-auto mt-14 hidden flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-dim sm:flex"
+        aria-label="Scroll to About"
+      >
+        scroll
+        <span className="relative h-10 w-px overflow-hidden bg-line">
+          <motion.span
+            className="absolute inset-x-0 top-0 h-1/2 bg-signal"
+            animate={{ y: ["-100%", "200%"] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </span>
+      </motion.a>
     </section>
   )
 }

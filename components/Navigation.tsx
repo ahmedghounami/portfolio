@@ -1,130 +1,158 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ArrowUpRight } from "lucide-react"
+import { useEffect, useState } from "react"
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
+import { Command } from "lucide-react"
+import { navItems, profile } from "@/lib/data"
+import { openPalette } from "./CommandPalette"
+import { EASE } from "./motion"
 
-interface NavigationProps {
-  activeSection: string
-}
+export default function Navigation({ activeSection, ready }: { activeSection: string; ready: boolean }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const { scrollY } = useScroll()
 
-export default function Navigation({ activeSection }: NavigationProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0
+    setHidden(y > prev && y > 400 && !menuOpen)
+    setScrolled(y > 20)
+  })
 
-  const navItems = [
-    { label: "About", href: "#about", id: "about" },
-    { label: "Skills", href: "#skills", id: "skills" },
-    { label: "Projects", href: "#projects", id: "projects" },
-    { label: "Experience", href: "#experience", id: "experience" },
-    { label: "Contact", href: "#contact", id: "contact" },
-  ]
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [menuOpen])
 
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-0 left-0 right-0 z-40 py-4 px-4 sm:px-6"
-    >
-      <div className="max-w-6xl mx-auto">
-        <nav className="flex items-center justify-between px-5 py-3 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl shadow-2xl shadow-black/60">
-          {/* Brand */}
-          <a
-            href="#hero"
-            className="flex items-center gap-2.5 group text-sm font-semibold tracking-wider text-white"
-          >
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-zinc-800 to-zinc-950 border border-white/15 flex items-center justify-center font-bold text-xs tracking-tighter text-white group-hover:border-white/40 transition-colors shadow-inner">
-              AG
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-zinc-100 group-hover:text-white transition-colors">Ahmed</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            </div>
+    <>
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={ready ? { y: hidden ? -100 : 0, opacity: 1 } : undefined}
+        transition={{ duration: 0.6, ease: EASE }}
+        className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6"
+      >
+        <nav
+          className={`mx-auto flex max-w-6xl items-center justify-between rounded-2xl border px-3 py-2.5 transition-all duration-500 sm:px-4 ${
+            scrolled || menuOpen ? "border-line bg-bg/70 backdrop-blur-xl shadow-2xl shadow-black/40" : "border-transparent"
+          }`}
+        >
+          <a href="#hero" className="group flex items-center gap-3" aria-label="Back to top" onClick={() => setMenuOpen(false)}>
+            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-line bg-elev font-mono text-xs font-bold text-fg">
+              <span className="transition-transform duration-500 group-hover:-translate-y-8">AG</span>
+              <span className="absolute translate-y-8 text-signal transition-transform duration-500 group-hover:translate-y-0">~/</span>
+            </span>
+            <span className="hidden sm:flex flex-col leading-tight">
+              <span className="text-sm font-medium text-fg">{profile.name}</span>
+              <span className="font-mono text-[10px] text-dim">software engineer</span>
+            </span>
           </a>
 
-          {/* Desktop Nav Items */}
-          <div className="hidden md:flex items-center gap-1 bg-zinc-900/50 p-1 rounded-xl border border-white/5">
-            {navItems.map((item) => {
-              const isActive = activeSection === item.id
+          <div className="hidden md:flex items-center gap-1">
+            {navItems.map((item, i) => {
+              const active = activeSection === item.id
               return (
                 <a
                   key={item.id}
-                  href={item.href}
-                  className={`relative px-4 py-1.5 text-xs font-medium transition-all duration-200 rounded-lg ${
-                    isActive ? "text-white font-semibold" : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
-                  }`}
+                  href={`#${item.id}`}
+                  className={`relative px-3.5 py-2 text-[13px] transition-colors ${active ? "text-fg" : "text-muted hover:text-fg"}`}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavPill"
-                      className="absolute inset-0 rounded-lg bg-zinc-800/80 border border-white/15 shadow-sm"
+                  <span className="mr-1 font-mono text-[10px] text-dim">0{i + 1}</span>
+                  {item.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute inset-x-3 -bottom-0.5 h-px bg-signal"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10">{item.label}</span>
                 </a>
               )
             })}
           </div>
 
-          {/* Desktop Right CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={openPalette}
+              className="hidden sm:inline-flex items-center gap-2 rounded-lg border border-line bg-white/[0.02] px-2.5 py-1.5 font-mono text-[11px] text-muted transition-colors hover:border-line-strong hover:text-fg"
+              aria-label="Open command palette"
+            >
+              <Command className="h-3 w-3" />K
+            </button>
             <a
               href="#contact"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-300 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all"
+              className="hidden md:inline-flex items-center gap-2 rounded-lg bg-fg px-3.5 py-1.5 text-[13px] font-medium text-bg transition-colors hover:bg-signal"
             >
-              Let&apos;s Talk
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-600" />
+              </span>
+              Hire me
             </a>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((o) => !o)}
+              className="md:hidden flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-xl border border-line"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              <motion.span animate={menuOpen ? { rotate: 45, y: 3.5 } : { rotate: 0, y: 0 }} className="h-px w-4 bg-fg" />
+              <motion.span animate={menuOpen ? { rotate: -45, y: -3.5 } : { rotate: 0, y: 0 }} className="h-px w-4 bg-fg" />
+            </button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 border border-white/5 transition-colors"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
         </nav>
-      </div>
+      </motion.header>
 
-      {/* Mobile Drawer */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden max-w-6xl mx-auto mt-2 p-4 rounded-2xl bg-zinc-950/95 border border-white/10 backdrop-blur-2xl shadow-2xl space-y-2"
+            initial={{ clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            exit={{ clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: EASE }}
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-bg px-6 pb-10 pt-28 md:hidden"
           >
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                  activeSection === item.id
-                    ? "bg-zinc-800 text-white border border-white/15"
-                    : "text-zinc-400 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {item.label}
+            <ul className="space-y-1">
+              {navItems.map((item, i) => (
+                <li key={item.id} className="overflow-hidden">
+                  <motion.a
+                    href={`#${item.id}`}
+                    onClick={() => setMenuOpen(false)}
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    exit={{ y: "100%" }}
+                    transition={{ duration: 0.6, delay: 0.1 + i * 0.05, ease: EASE }}
+                    className={`flex items-baseline gap-4 py-1 text-5xl font-semibold tracking-tight ${
+                      activeSection === item.id ? "text-signal" : "text-fg"
+                    }`}
+                  >
+                    <span className="font-mono text-xs text-dim">0{i + 1}</span>
+                    {item.label}
+                  </motion.a>
+                </li>
+              ))}
+            </ul>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.4 } }}
+              exit={{ opacity: 0 }}
+              className="space-y-2 font-mono text-xs text-muted"
+            >
+              <a href={`mailto:${profile.email}`} className="block text-fg">
+                {profile.email}
               </a>
-            ))}
-            <div className="pt-2 border-t border-white/10">
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-semibold text-black bg-white hover:bg-zinc-200 transition-colors"
-              >
-                Get in Touch <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
+              <div className="flex gap-4">
+                <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+                <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+                <a href={profile.cv} target="_blank" rel="noopener noreferrer">CV ↗</a>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   )
 }

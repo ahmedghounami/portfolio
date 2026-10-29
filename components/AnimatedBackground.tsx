@@ -1,111 +1,124 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { motion } from "framer-motion";
-import clsx from "clsx";
+import { useEffect, useRef } from "react"
+
+const GAP = 28
+const RADIUS = 170
 
 /**
- * Obsidian & Black Luxury Animated Background:
- * - Ultra-deep dark radial base
- * - Subtle ambient monochrome & silver glow orbs
- * - Precision dark grid overlay
- * - Dynamic atmospheric light sweeps
+ * Fixed dot-grid field. Dots near the pointer are pushed away and light up in the
+ * signal colour; a slow diagonal wave keeps the field alive when the pointer is idle.
  */
-type AnimatedBackgroundProps = {
-  className?: string;
-  showGrid?: boolean;
-  intensity?: number;
-};
+export default function AnimatedBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
-export default function AnimatedBackground({
-  className,
-  showGrid = true,
-  intensity = 1,
-}: AnimatedBackgroundProps) {
-  const orbScale = Math.max(0.7, Math.min(1.5, intensity));
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext("2d")
+    if (!canvas || !ctx) return
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    let w = 0
+    let h = 0
+    let raf = 0
+    const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999 }
+
+    const resize = () => {
+      w = window.innerWidth
+      h = window.innerHeight
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = `${w}px`
+      canvas.style.height = `${h}px`
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      if (reduce) draw(0)
+    }
+
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, w, h)
+      mouse.x += (mouse.tx - mouse.x) * 0.12
+      mouse.y += (mouse.ty - mouse.y) * 0.12
+      const cols = Math.ceil(w / GAP) + 1
+      const rows = Math.ceil(h / GAP) + 1
+      const ox = (w % GAP) / 2
+      const oy = (h % GAP) / 2
+
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          let x = ox + i * GAP
+          let y = oy + j * GAP
+          const wave = reduce ? 0 : Math.sin(i * 0.25 + j * 0.18 - t * 0.0009) * 0.5 + 0.5
+          const dx = x - mouse.x
+          const dy = y - mouse.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          const f = dist < RADIUS ? 1 - dist / RADIUS : 0
+
+          if (f > 0) {
+            const push = f * f * 14
+            x += (dx / (dist || 1)) * push
+            y += (dy / (dist || 1)) * push
+            ctx.fillStyle = `rgba(197, 247, 79, ${0.15 + f * 0.75})`
+            ctx.beginPath()
+            ctx.arc(x, y, 0.8 + f * 1.4, 0, Math.PI * 2)
+            ctx.fill()
+          } else {
+            ctx.fillStyle = `rgba(255, 255, 255, ${0.05 + wave * 0.06})`
+            ctx.fillRect(x - 0.6, y - 0.6, 1.2, 1.2)
+          }
+        }
+      }
+    }
+
+    const loop = (t: number) => {
+      draw(t)
+      raf = requestAnimationFrame(loop)
+    }
+
+    const onMove = (e: PointerEvent) => {
+      mouse.tx = e.clientX
+      mouse.ty = e.clientY
+    }
+    const onLeave = () => {
+      mouse.tx = -9999
+      mouse.ty = -9999
+    }
+    const onVisibility = () => {
+      cancelAnimationFrame(raf)
+      if (!document.hidden && !reduce) raf = requestAnimationFrame(loop)
+    }
+
+    resize()
+    window.addEventListener("resize", resize)
+    if (!reduce) {
+      window.addEventListener("pointermove", onMove, { passive: true })
+      document.addEventListener("pointerleave", onLeave)
+      document.addEventListener("visibilitychange", onVisibility)
+      raf = requestAnimationFrame(loop)
+    }
+
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("resize", resize)
+      window.removeEventListener("pointermove", onMove)
+      document.removeEventListener("pointerleave", onLeave)
+      document.removeEventListener("visibilitychange", onVisibility)
+    }
+  }, [])
 
   return (
-    <div
-      className={clsx(
-        "pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#050507]",
-        className
-      )}
-    >
-      {/* Deep Obsidian Radial Spotlight */}
+    <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-bg">
+      <canvas ref={canvasRef} className="absolute inset-0" />
+      {/* Signal glow from the top */}
+      <div
+        className="absolute inset-x-0 -top-40 h-[70vh]"
+        style={{ background: "radial-gradient(ellipse 50% 60% at 50% 0%, rgba(197,247,79,0.07), transparent 70%)" }}
+      />
+      {/* Fade the grid out towards the edges */}
       <div
         className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(39,39,42,0.4) 0%, rgba(9,9,11,0.8) 50%, rgba(5,5,7,1) 100%)",
-        }}
+        style={{ background: "radial-gradient(ellipse 90% 80% at 50% 40%, transparent 40%, var(--bg) 100%)" }}
       />
-
-      {/* Floating Ambient Dark Orbs */}
-      <motion.div
-        aria-hidden
-        className="absolute -top-32 -left-32 blur-[120px] rounded-full bg-gradient-to-br from-zinc-700/20 via-zinc-800/10 to-transparent"
-        style={{
-          width: `${32 * orbScale}rem`,
-          height: `${32 * orbScale}rem`,
-        }}
-        animate={{ y: [0, 20, -10, 0], x: [0, 15, -10, 0], scale: [1, 1.05, 0.95, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="absolute top-1/3 -right-32 blur-[140px] rounded-full bg-gradient-to-br from-neutral-600/15 via-zinc-900/10 to-transparent"
-        style={{
-          width: `${36 * orbScale}rem`,
-          height: `${36 * orbScale}rem`,
-        }}
-        animate={{ y: [0, -25, 15, 0], x: [0, -15, 10, 0], scale: [1, 0.95, 1.05, 1] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        aria-hidden
-        className="absolute -bottom-40 left-1/4 blur-[130px] rounded-full bg-gradient-to-tr from-zinc-700/10 via-neutral-800/10 to-transparent"
-        style={{
-          width: `${30 * orbScale}rem`,
-          height: `${30 * orbScale}rem`,
-        }}
-        animate={{ y: [0, 15, -15, 0], x: [0, -10, 15, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Precision Dark Grid Overlay */}
-      {showGrid && (
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255, 255, 255, 0.25) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 1px, transparent 1px)
-            `,
-            backgroundSize: "64px 64px",
-            maskImage: "radial-gradient(ellipse 80% 70% at 50% 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-            WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 30%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%)",
-          }}
-        />
-      )}
-
-      {/* Subtle dynamic sheen */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0"
-        initial={{ opacity: 0.03 }}
-        animate={{ opacity: [0.02, 0.06, 0.02] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          background:
-            "linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.06) 40%, transparent 80%)",
-          maskImage:
-            "radial-gradient(ellipse at 50% 20%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%)",
-        }}
-      />
-
-      {/* Vignette depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050507]" />
     </div>
-  );
+  )
 }

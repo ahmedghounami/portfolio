@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
@@ -13,56 +13,73 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument",
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+});
+
+const title = "Ahmed Ghounami — Full-Stack & Systems Engineer";
+const description =
+  "Full-stack and systems engineer trained at 42 Paris. Creator of Portify, a portfolio builder with twelve animated templates. Next.js, React, TypeScript, Node.js, Supabase, C/C++.";
+
+export const viewport: Viewport = {
+  themeColor: "#07070a",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ahmedghounami.dev"),
-  title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
-  description:
-    "Portfolio of Ahmed Ghounami — Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Specializing in Next.js, React, Node.js, NestJS, Socket.io real-time apps, streaming protocols, and low-level C/C++ architecture.",
+  metadataBase: new URL("https://ahmedghounami.vercel.app"),
+  title: {
+    default: title,
+    template: "%s | Ahmed Ghounami",
+  },
+  description,
+  applicationName: "Ahmed Ghounami Portfolio",
+  category: "technology",
+  authors: [{ name: "Ahmed Ghounami", url: "https://github.com/ahmedghounami" }],
+  creator: "Ahmed Ghounami",
   keywords: [
     "Ahmed Ghounami",
     "Software Engineer",
     "Full-Stack Developer",
-    "42 Paris",
-    "42 Network",
+    "Portify",
+    "Portfolio builder",
     "Next.js",
     "React",
     "TypeScript",
+    "Supabase",
     "NestJS",
     "Node.js",
     "Socket.io",
-    "Red Tetris",
-    "Hypertube",
-    "ft_transcendence",
-    "WebServ",
     "React Native",
+    "C++",
     "Docker",
-    "DevOps",
+    "42 Paris",
+    "1337",
   ],
-  authors: [{ name: "Ahmed Ghounami", url: "https://github.com/ahmedghounami" }],
-  creator: "Ahmed Ghounami",
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
-    description:
-      "Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Explore projects in real-time gaming, BitTorrent streaming, mobile companion apps, and C++ systems.",
-    url: "https://ahmedghounami.dev",
-    siteName: "Ahmed Ghounami Portfolio",
-    images: [
-      {
-        url: "/profile.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Ahmed Ghounami — Software Engineer",
-      },
-    ],
-    locale: "en_US",
     type: "website",
+    url: "/",
+    siteName: "Ahmed Ghounami",
+    title,
+    description,
+    locale: "en_US",
+    images: [{ url: "/profile.jpg", width: 1200, height: 630, alt: "Ahmed Ghounami — Software Engineer" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ahmed Ghounami — Full-Stack & Systems Software Engineer",
-    description:
-      "Full-Stack & Systems Software Engineer trained at 42 Paris (42 Network). Explore projects in real-time gaming, BitTorrent streaming, and C++ systems.",
+    title,
+    description,
     images: ["/profile.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
   icons: {
     icon: [
@@ -82,15 +99,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#050507] text-zinc-100`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased bg-bg text-fg`}>
         {children}
         <Analytics />
       </body>

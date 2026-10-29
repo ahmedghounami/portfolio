@@ -1,143 +1,96 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Code2, Server, Smartphone, Cpu, CheckCircle2 } from "lucide-react"
+import { useRef } from "react"
+import { motion, useScroll, useTransform, type MotionValue } from "framer-motion"
+import Image from "next/image"
+import { CountUp, Reveal, SectionHeading, Spotlight } from "./motion"
+
+const STATEMENT =
+  "I care about the whole stack: the memory layout under a C++ server, the schema behind an API, and the two hundred milliseconds of motion that make an interface feel alive. I learned to build at 1337 and 42 Paris, where there are no teachers, just hard problems, peers and code review."
+
+const PRINCIPLES = [
+  { n: "01", title: "Ship end to end", body: "Database, API, interface, tests, deployment. I own the whole path from idea to a URL people use." },
+  { n: "02", title: "Prove it works", body: "Typed contracts, unit tests and browser tests at real screen sizes, so changes ship with confidence." },
+  { n: "03", title: "Motion with purpose", body: "Animation that explains and guides, and steps aside for people who prefer reduced motion." },
+]
+
+function Word({ children, progress, range }: { children: string; progress: MotionValue<number>; range: [number, number] }) {
+  const opacity = useTransform(progress, range, [0.15, 1])
+  return (
+    <motion.span style={{ opacity }} className="mr-[0.25em] inline-block">
+      {children}
+    </motion.span>
+  )
+}
 
 export default function AboutSection() {
-  const pillars = [
-    {
-      icon: <Code2 className="w-6 h-6 text-zinc-200" />,
-      title: "Frontend Engineering",
-      description:
-        "Building responsive, high-speed, and accessible interfaces using Next.js, React, TypeScript, Tailwind CSS, and fluid motion design.",
-    },
-    {
-      icon: <Server className="w-6 h-6 text-zinc-200" />,
-      title: "Backend & Automation",
-      description:
-        "Architecting resilient RESTful APIs and microservices with NestJS, Node.js, Fastify, Supabase, SQLite, and n8n automated workflows.",
-    },
-    {
-      icon: <Smartphone className="w-6 h-6 text-zinc-200" />,
-      title: "Mobile & Systems",
-      description:
-        "Crafting cross-platform mobile apps with React Native / Expo, Xcode, and low-level performant UNIX systems software in C and C++98.",
-    },
-  ]
-
-  const highlights = [
-    "Started at 1337 Khouribga, now continuing RNCP level 7 studies at 42 Paris",
-    "Intensive peer-to-peer software engineering at 42 Paris",
-    "Hands-on production internships building scalable web platforms",
-    "Deep foundation in algorithms, memory management & system internals",
-    "Clean code advocate focusing on maintainability, performance & UX",
-  ]
+  const textRef = useRef<HTMLParagraphElement>(null)
+  const { scrollYProgress } = useScroll({ target: textRef, offset: ["start 85%", "end 45%"] })
+  const words = STATEMENT.split(" ")
 
   return (
-    <section id="about" className="py-20 relative">
-      <div className="container mx-auto px-6 max-w-6xl">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/10 text-xs font-medium text-zinc-400 mb-3">
-            <Cpu className="w-3.5 h-3.5 text-zinc-300" />
-            <span>BACKGROUND & PHILOSOPHY</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
-            Engineering with{" "}
-            <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">
-              Precision & Purpose
-            </span>
-          </h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base">
-            Bridging low-level systems discipline with modern high-level web, mobile craftsmanship, and Web3 fundamentals.
-          </p>
-        </motion.div>
+    <section id="about" className="relative py-28 sm:py-40">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <SectionHeading index="01" label="About" title="Engineer by training," accent="builder by nature." />
 
-        {/* Story & Highlights */}
-        <div className="grid lg:grid-cols-12 gap-8 items-stretch mb-12">
-          {/* Story Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7 p-8 rounded-3xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl flex flex-col justify-between"
-          >
-            <div>
-              <h3 className="text-xl font-bold text-white mb-4">The 42 Paris Foundation</h3>
-              <p className="text-zinc-300 text-sm sm:text-base leading-relaxed mb-4">
-                My software journey took root at <strong className="text-white">42 Paris</strong> (part of the global 42 Network). Without traditional teachers or lectures, I mastered problem-solving through intense peer-to-peer collaboration, code reviews, and project-driven learning.
-              </p>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6">
-                From engineering our own non-blocking HTTP web server in C++ and BitTorrent video streaming engines (Hypertube), to architecting real-time multiplayer arenas (Red Tetris & ft_transcendence) and mobile companion ecosystems (Swifty Companion), I cultivate an obsession for resilient system design, sub-millisecond responsiveness, and pixel-perfect interfaces.
-              </p>
-            </div>
+        <p ref={textRef} className="max-w-5xl text-2xl font-medium leading-[1.3] tracking-tight text-fg sm:text-4xl" aria-label={STATEMENT}>
+          {words.map((w, i) => (
+            <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>
+              {w}
+            </Word>
+          ))}
+        </p>
 
-            {/* Checkmark list */}
-            <div className="space-y-2.5 pt-4 border-t border-white/10">
-              {highlights.map((item, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-zinc-300">
-                  <CheckCircle2 className="w-4 h-4 text-white shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Quick Metrics */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 grid grid-cols-2 gap-4"
-          >
-            {[
-              { num: "3+", label: "Years Coding Experience", sub: "Deep technical rigor" },
-              { num: "42", label: "Paris Campus", sub: "Strict peer-evaluation" },
-              { num: "100%", label: "Curiosity & Drive", sub: "Continuous learner" },
-              { num: "Full", label: "Stack Mastery", sub: "Frontend to Kernel" },
-            ].map((stat, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-3xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl flex flex-col justify-center hover:border-white/20 transition-colors group"
-              >
-                <div className="text-3xl sm:text-4xl font-extrabold text-white mb-1 tracking-tight group-hover:scale-105 transition-transform origin-left">
-                  {stat.num}
-                </div>
-                <div className="text-xs sm:text-sm font-semibold text-zinc-200 mb-1">{stat.label}</div>
-                <div className="text-[11px] text-zinc-500">{stat.sub}</div>
+        <div className="mt-20 grid gap-4 md:grid-cols-6">
+          <Reveal className="md:col-span-2 md:row-span-2">
+            <Spotlight className="group relative h-full min-h-[340px] overflow-hidden rounded-3xl border border-line bg-elev">
+              <Image
+                src="/profile.jpg"
+                alt="Portrait of Ahmed Ghounami"
+                fill
+                sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/10 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-signal">Based in Paris</div>
+                <div className="mt-1 text-lg font-medium text-fg">Ahmed Ghounami</div>
               </div>
-            ))}
-          </motion.div>
+            </Spotlight>
+          </Reveal>
+
+          {[
+            { v: 12, s: "", label: "templates shipped in Portify" },
+            { v: 2, s: "", label: "engineering internships" },
+            { v: 7, s: "", label: "RNCP level track at 42 Paris" },
+            { v: 3, s: "+", label: "years writing code daily" },
+          ].map((stat, i) => (
+            <Reveal key={stat.label} delay={i * 0.08} className="md:col-span-2 lg:col-span-2">
+              <Spotlight className="flex h-full flex-col justify-between rounded-3xl border border-line bg-white/[0.015] p-6">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-dim">0{i + 1}</span>
+                <div>
+                  <div className="text-5xl font-semibold tracking-tighter text-fg sm:text-6xl">
+                    <CountUp value={stat.v} suffix={stat.s} />
+                  </div>
+                  <div className="mt-2 text-sm text-muted">{stat.label}</div>
+                </div>
+              </Spotlight>
+            </Reveal>
+          ))}
         </div>
 
-        {/* Pillars Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {pillars.map((pillar, idx) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              className="p-6 rounded-3xl bg-zinc-950/60 border border-white/10 hover:border-white/25 backdrop-blur-xl transition-all duration-300 group shadow-lg shadow-black/40"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center mb-5 group-hover:border-white/30 group-hover:bg-zinc-800 transition-colors">
-                {pillar.icon}
-              </div>
-              <h4 className="text-lg font-bold text-white mb-2 group-hover:text-zinc-100 transition-colors">
-                {pillar.title}
-              </h4>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">{pillar.description}</p>
-            </motion.div>
+        <div className="mt-4 grid gap-4 md:grid-cols-3">
+          {PRINCIPLES.map((p, i) => (
+            <Reveal key={p.n} delay={i * 0.1}>
+              <Spotlight className="group h-full rounded-3xl border border-line bg-white/[0.015] p-7 transition-colors hover:border-line-strong">
+                <div className="mb-10 flex items-center justify-between font-mono text-xs text-dim">
+                  <span>{p.n}</span>
+                  <span className="h-1.5 w-1.5 rounded-full bg-dim transition-colors group-hover:bg-signal" />
+                </div>
+                <h3 className="text-xl font-medium text-fg">{p.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
+              </Spotlight>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,40 +1,43 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { ArrowUp } from "lucide-react"
+import { ArrowUp, Command } from "lucide-react"
+import { portify, profile } from "@/lib/data"
+import { openPalette } from "./CommandPalette"
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
   return (
-    <footer className="py-12 border-t border-white/10 bg-black/60 backdrop-blur-xl">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div>
-            <p className="text-sm font-semibold text-white">
-              Ahmed Ghounami <span className="text-zinc-500 font-normal">/ Software Engineer</span>
-            </p>
-            <p className="text-xs text-zinc-500 mt-1">
-                  Built with Next.js, React 19, TypeScript & Tailwind CSS • 42 Paris
-            </p>
+    <footer className="relative overflow-hidden border-t border-line">
+      <div className="mx-auto max-w-6xl px-5 pt-12 sm:px-6">
+        <div className="flex flex-col gap-8 font-mono text-xs text-dim sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-1">
+            <p className="text-muted">© {new Date().getFullYear()} {profile.name}</p>
+            <p>Next.js · React 19 · TypeScript · Tailwind CSS · Framer Motion</p>
           </div>
-
-          <div className="flex items-center gap-4">
-            <p className="text-xs text-zinc-500">
-              © {new Date().getFullYear()} All rights reserved.
-            </p>
-
+          <div className="flex flex-wrap items-center gap-4">
+            <a href={portify.url} target="_blank" rel="noopener noreferrer" className="hover:text-signal">
+              Portify ↗
+            </a>
+            <button type="button" onClick={openPalette} className="inline-flex items-center gap-1.5 hover:text-signal">
+              press <kbd className="inline-flex items-center gap-0.5 rounded border border-line px-1.5 py-0.5 text-[10px]"><Command className="h-2.5 w-2.5" />K</kbd>
+            </button>
             <button
-              onClick={scrollToTop}
-              className="p-2.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-white transition-all shadow-sm"
-              title="Scroll to top"
-              aria-label="Scroll to top"
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-signal hover:text-signal"
+              aria-label="Back to top"
             >
-              <ArrowUp className="w-4 h-4" />
+              <ArrowUp className="h-4 w-4" />
             </button>
           </div>
+        </div>
+      </div>
+
+      <div aria-hidden className="mt-10 select-none overflow-hidden">
+        <div
+          className="translate-y-[18%] whitespace-nowrap text-center text-[22vw] font-semibold leading-none tracking-[-0.07em]"
+          style={{ WebkitTextStroke: "1px rgba(255,255,255,0.12)", color: "transparent" }}
+        >
+          GHOUNAMI
         </div>
       </div>
     </footer>
