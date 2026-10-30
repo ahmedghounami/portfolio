@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState, type MouseEvent } from "react"
 import Image from "next/image"
 import { AnimatePresence, motion, useMotionValue, useSpring } from "framer-motion"
-import { ArrowUpRight, Github, X } from "lucide-react"
+import { ArrowUpRight, Github, Globe, X } from "lucide-react"
 import { projects, type Project } from "@/lib/data"
 import { EASE, Reveal, SectionHeading } from "./motion"
 
@@ -75,14 +75,26 @@ function ProjectDrawer({ project, onClose }: { project: Project | null; onClose:
                 ))}
               </div>
 
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-10 inline-flex items-center gap-2 rounded-full bg-fg px-5 py-3 text-sm font-semibold text-bg transition-colors hover:bg-signal"
-              >
-                <Github className="h-4 w-4" /> View source <ArrowUpRight className="h-4 w-4" />
-              </a>
+              <div className="mt-10 flex flex-wrap gap-3">
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-signal px-5 py-3 text-sm font-semibold text-black transition-colors hover:bg-fg"
+                  >
+                    <Globe className="h-4 w-4" /> Visit live <ArrowUpRight className="h-4 w-4" />
+                  </a>
+                )}
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-fg px-5 py-3 text-sm font-semibold text-bg transition-colors hover:bg-signal"
+                >
+                  <Github className="h-4 w-4" /> View source <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
             </div>
           </motion.aside>
         </motion.div>

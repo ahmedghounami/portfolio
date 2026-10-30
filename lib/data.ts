@@ -101,10 +101,28 @@ export type Project = {
   highlights: string[]
   tech: string[]
   link: string
+  live?: string
   image: string
 }
 
 export const projects: Project[] = [
+  {
+    title: "Firstlight",
+    category: "Birthday story web app",
+    filter: "Full-Stack",
+    year: "2026",
+    description:
+      "Enter a date of birth and watch the biggest moments of that exact day as a full-screen story: goals, music, famous arrivals and departures, films and headlines. Every record is traced to its sources, with no database, no accounts and no AI-written content.",
+    highlights: [
+      "Source adapters that recheck each date, then merge, verify and rank",
+      "Chapters stream in as sources respond, and each source fails on its own",
+      "Moroccan moments in Arabic and English, from Wikidata and Arabic Wikipedia",
+    ],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion", "Wikidata", "MusicBrainz", "Vitest", "Playwright"],
+    link: "https://github.com/ahmedghounami/firstlightday",
+    live: "https://firstlightday.vercel.app",
+    image: "/firstlight.jpg",
+  },
   {
     title: "Red Tetris",
     category: "Real-time multiplayer game",
