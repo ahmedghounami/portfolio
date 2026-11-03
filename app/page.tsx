@@ -1,5 +1,5 @@
 import PortfolioClient from "../components/PortfolioClient"
-import { experience, profile } from "@/lib/data"
+import { experience, portify, profile } from "@/lib/data"
 
 const education = experience.find((e) => e.type === "Education")
 
@@ -21,6 +21,13 @@ const structuredData = {
       sameAs: [profile.github, profile.linkedin],
       ...(education && { alumniOf: { "@type": "EducationalOrganization", name: "42 Paris", url: education.link } }),
       knowsAbout: ["Next.js", "React", "TypeScript", "Node.js", "NestJS", "Supabase", "React Native", "C", "C++", "Docker"],
+    },
+    {
+      "@type": "Organization",
+      "@id": `${portify.url}/#organization`,
+      name: portify.name,
+      url: portify.url,
+      founder: { "@id": `${profile.site}/#person` },
     },
     {
       "@type": "WebSite",
