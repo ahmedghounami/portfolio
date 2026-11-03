@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ahmedghounami.vercel.app"),
+  metadataBase: new URL("https://ahmedghounami.tech"),
   title: {
     default: title,
     template: "%s | Ahmed Ghounami",

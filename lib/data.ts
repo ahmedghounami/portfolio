@@ -11,7 +11,7 @@ export const profile = {
   github: "https://github.com/ahmedghounami",
   linkedin: "https://www.linkedin.com/in/ahmed-ghounami-a675b1294/",
   cv: "/cv.pdf",
-  site: "https://ahmedghounami.vercel.app",
+  site: "https://ahmedghounami.tech",
 }
 
 export const navItems = [

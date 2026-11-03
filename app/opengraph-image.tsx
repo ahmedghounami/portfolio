@@ -15,7 +15,7 @@ export default async function OpengraphImage() {
     (
       <div style={{ display: "flex", width: "100%", height: "100%", background: "#07070a", color: "#ededef" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flex: 1, padding: 72 }}>
-          <div style={{ display: "flex", fontSize: 26, color: "#c5f74f", fontFamily: "monospace" }}>ahmedghounami.vercel.app</div>
+          <div style={{ display: "flex", fontSize: 26, color: "#c5f74f", fontFamily: "monospace" }}>ahmedghounami.tech</div>
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div style={{ fontSize: 84, fontWeight: 700, letterSpacing: -3, lineHeight: 1 }}>{profile.name}</div>
             <div style={{ marginTop: 24, fontSize: 36, color: "#9a9aa3" }}>Full-stack & systems engineer</div>
