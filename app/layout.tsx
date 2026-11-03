@@ -68,19 +68,19 @@ export const metadata: Metadata = {
     title,
     description,
     locale: "en_US",
-    images: [{ url: "/profile.jpg", width: 1200, height: 630, alt: "Ahmed Ghounami — Software Engineer" }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: ["/profile.jpg"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
+  // Proves ownership to Google Search Console (the HTML tag method).
+  ...(process.env.GOOGLE_SITE_VERIFICATION && { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }),
   icons: {
     icon: [
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },

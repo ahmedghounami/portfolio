@@ -119,13 +119,13 @@ function TemplateShowcase() {
             type="button"
             role="tab"
             aria-selected={i === index}
-            aria-label={t.name}
             onClick={() => setIndex(i)}
             className="group relative h-8 overflow-hidden rounded-md border border-line bg-white/[0.02] transition-colors hover:border-line-strong"
           >
-            <span className={`relative z-10 font-mono text-[9px] uppercase ${i === index ? "text-signal" : "text-dim group-hover:text-fg"}`}>
+            <span aria-hidden className={`relative z-10 font-mono text-[9px] uppercase ${i === index ? "text-signal" : "text-dim group-hover:text-fg"}`}>
               {t.id.slice(0, 4)}
             </span>
+            <span className="sr-only">{t.name}</span>
             {i === index && (
               <motion.span
                 key={`${t.id}-${paused}`}

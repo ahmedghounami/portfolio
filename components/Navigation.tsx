@@ -39,14 +39,17 @@ export default function Navigation({ activeSection, ready }: { activeSection: st
             scrolled || menuOpen ? "border-line bg-bg/70 backdrop-blur-xl shadow-2xl shadow-black/40" : "border-transparent"
           }`}
         >
-          <a href="#hero" className="group flex items-center gap-3" aria-label="Back to top" onClick={() => setMenuOpen(false)}>
-            <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-line bg-elev font-mono text-xs font-bold text-fg">
+          <a href="#hero" className="group flex items-center gap-3" onClick={() => setMenuOpen(false)}>
+            <span aria-hidden className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-line bg-elev font-mono text-xs font-bold text-fg">
               <span className="transition-transform duration-500 group-hover:-translate-y-8">AG</span>
               <span className="absolute translate-y-8 text-signal transition-transform duration-500 group-hover:translate-y-0">~/</span>
             </span>
             <span className="hidden sm:flex flex-col leading-tight">
               <span className="text-sm font-medium text-fg">{profile.name}</span>
               <span className="font-mono text-[10px] text-dim">software engineer</span>
+            </span>
+            <span className="sr-only">
+              <span className="sm:hidden">{profile.name}, </span>back to top
             </span>
           </a>
 
